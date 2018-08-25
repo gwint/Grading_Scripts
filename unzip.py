@@ -2,18 +2,35 @@ import os
 import sys
 import subprocess
 import csv
+from argparse import ArgumentParser
 
 #each line will have the students binghamton ID first, followed by their git username. 
 #separated by a single space.
 
-GITHUB_INFO_FILE = "student_githubs.txt" ## maps id to github username
 COMMIT_HASHS_DIR = "hash_files" ## maps student name to commit hash
                                 ## (only of people who submitted)
-STUDENT_INFO_FILE = "student_info.csv" ## maps id to student name
+STUDENT_INFO_FILE = "students.csv" ## maps id to student name
 NAME_IDX = 0
 HASH_IDX = 6
 NO_ENTRY_MESSAGE = \
         "There is no student submission text data for this assignment."
+A51_ROSTER = "a51_roster.csv"
+A52_ROSTER = "a52_roster.csv"
+A53_ROSTER = "a53_roster.csv"
+A54_ROSTER = "a54_roster.csv"
+
+def get_roster(roster_file):
+  roster = []
+  roster_file_obj = open(roster_file, 'r')
+  line = roster_file_obj.readline()
+  while(line):
+    pieces = line.split(',')
+    name = f'{pieces[1].strip()} {pieces[0].strip()}'
+    roster.append(name)
+    line = roster_file_obj.readline()
+  roster_file_obj.close()
+
+  return roster
 
 def get_name_to_hash_mapping():
   name_to_hash_mapping = {}
@@ -34,56 +51,56 @@ def get_name_to_hash_mapping():
     commit_file_obj.close()
   return name_to_hash_mapping
 
-
-def get_id_to_name_mapping():
-  id_to_name_mapping = {}
+def get_student_info():
+  name_to_info_mapping = {}
   with open(STUDENT_INFO_FILE, 'r') as csv_file:
     csv_reader = csv.reader(csv_file)
     for row in (csv_reader):
-      first_name = row[0]
-      last_name = row[1]
-      id = row[2]
-      id_to_name_mapping[id] = "%s %s" % (first_name, last_name)
+      student_name = row[0]
+      student_id = row[1]
+      github_username = row[2]
 
-  return id_to_name_mapping
+      name_to_info_mapping[student_name] = [student_id, github_username]
 
-
-def get_id_to_github_uname_mapping():
-  id_to_username_mapping = {}
-
-  with open(GITHUB_INFO_FILE, 'r') as github_info_file_obj:
-    line = github_info_file_obj.readline()
-    while(line):
-      id_and_username = line.split()
-      id_to_username_mapping[id_and_username[0]] = id_and_username[1]
-      line = github_info_file_obj.readline()
-
-  return id_to_username_mapping
+  return name_to_info_mapping
 
 #make a directory names after the assignment
 #for each student, go through clone their repositories
 def main():
-  if len(sys.argv) != 2:
-    print("Usage: python uzip.py [assignment name]")
-    exit(0)
-
   students_wo_githubs = []
   students_wo_commit_hash = []
 
-  id_to_name_mapping = get_id_to_name_mapping()
-  id_to_username_mapping = get_id_to_github_uname_mapping()
+  name_to_info_mapping = get_student_info()
   name_to_hash_mapping = get_name_to_hash_mapping()
 
-  assert len(id_to_name_mapping) == 77
-  assert len(id_to_username_mapping) == 65
-  assert len(name_to_hash_mapping) == 68
+  parser = ArgumentParser()
+  parser.add_argument("assn_name", type=str, nargs=1)
+  parser.add_argument("-a51", action="store_true")
+  parser.add_argument("-a52", action="store_true")
+  parser.add_argument("-a53", action="store_true")
+  parser.add_argument("-a54", action="store_true")
+
+  students_of_interest = []
+  args = parser.parse_args()
+
+  assn_name = args.assn_name
+
+  if(args.a51):
+    students_of_interest += get_roster(A51_ROSTER)
+  if(args.a52):
+    students_of_interest += get_roster(A52_ROSTER)
+  if(args.a53):
+    students_of_interest += get_roster(A53_ROSTER)
+  if(args.a54):
+    students_of_interest += get_roster(A54_ROSTER)
 
   os.system("mkdir " + sys.argv[1])
   num_repos_cloned = 0
-  for bID in id_to_name_mapping.keys():
-    if(bID in id_to_username_mapping.keys()):
-      gitusername = id_to_username_mapping[bID]
-      student_name = id_to_name_mapping[bID]
+
+  for student_name in students_of_interest:
+    bID = name_to_info_mapping[student_name][0]
+    gitusername = name_to_info_mapping[student_name][1]
+    if(name_to_info_mapping[student_name][1] != "NA"):
       if(student_name in name_to_hash_mapping.keys()):
         os.system("git clone " + "https://github.com/Binghamton-CS140-A0-Fall-2018/" + sys.argv[1] + "-" + gitusername.replace("\n", "") + ".git")
         os.system("mkdir " + bID)
@@ -91,15 +108,21 @@ def main():
         os.system("mv " + bID + " " + sys.argv[1])
 
         # #now we want to ensure we get the commit that the student wants graded
-        p = subprocess.Popen(["git checkout", name_to_hash_mapping[id_to_name_mapping[bID]] ], cwd= sys.argv[1] + os.sep + bID + os.sep + sys.argv[1] + "-" + gitusername.replace("\n", ""), shell=True)
+        p = subprocess.Popen(["git checkout",\
+                             name_to_hash_mapping[student_name]],\
+                             cwd = sys.argv[1] + os.sep + bID +\
+                                 os.sep + sys.argv[1] + "-" +\
+                                 gitusername.replace("\n", ""),\
+                             shell=True)
         num_repos_cloned += 1
-        #p.wait()
+        p.wait()
       else:
-        students_wo_commit_hash.append(bID)
+        students_wo_commit_hash.append(student_name)
     else:
-      students_wo_githubs.append(bID)
+      students_wo_githubs.append(student_name)
 
-  print(f'Successfully cloned repos from {num_repos_cloned} students out of a possible {len(id_to_name_mapping)}.')
+
+  print(f'Successfully cloned repos from {num_repos_cloned} students out of a possible {len(students_of_interest)}.')
   print(f'{len(students_wo_githubs)} have no github username on file.')
   print(students_wo_githubs)
   print(f'{len(students_wo_commit_hash)} have no commit hash on file.')
