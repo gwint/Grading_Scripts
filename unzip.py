@@ -3,15 +3,14 @@ import sys
 import subprocess
 import csv
 from argparse import ArgumentParser
-
-#each line will have the students binghamton ID first, followed by their git username. 
-#separated by a single space.
+from html.parser import HTMLParser
 
 COMMIT_HASHS_DIR = "hash_files" ## maps student name to commit hash
                                 ## (only of people who submitted)
-STUDENT_INFO_FILE = "students.csv" ## maps id to student name
+STUDENT_INFO_FILE = "students.csv"
 NAME_IDX = 0
 HASH_IDX = 6
+COMMENT_IDX = 9
 NO_ENTRY_MESSAGE = \
         "There is no student submission text data for this assignment."
 A51_ROSTER = "a51_roster.csv"
@@ -38,17 +37,30 @@ def get_name_to_hash_mapping():
     commit_file_obj = open(f'{COMMIT_HASHS_DIR}/{filename}', 'r')
     lines = commit_file_obj.readlines()
     name = lines[0].strip().split("Name:")[1].strip().split('(')[0].strip()
-    hash = lines[HASH_IDX].replace("<p>", "")\
-                          .replace('</p>\n', "")\
-                          .replace('</pre>', "")\
-                          .replace('<pre style="width: 1.0px;height: 1.0px;top: 5.0px;">', "")\
-                          .replace('</span></span>', "").strip()
+
+    class HashParser(HTMLParser):
+      def __init__(self):
+        self._hash = ""
+        HTMLParser.__init__(self)
+
+      def handle_data(self, data):
+        if(data.strip()):
+          self._hash = data.strip()
+
+      def get_hash(self):
+        return self._hash
+
+    parser = HashParser()
+    parser.feed(lines[HASH_IDX])
+
+    hash = parser.get_hash()
 
     if(hash == NO_ENTRY_MESSAGE):
-      hash = lines[9].strip()
+      hash = lines[COMMENT_IDX].strip()
 
     name_to_hash_mapping[name] = hash
     commit_file_obj.close()
+
   return name_to_hash_mapping
 
 def get_student_info():
@@ -102,12 +114,12 @@ def main():
     gitusername = name_to_info_mapping[student_name][1]
     if(name_to_info_mapping[student_name][1] != "NA"):
       if(student_name in name_to_hash_mapping.keys()):
-        os.system("git clone " + "https://github.com/Binghamton-CS140-A0-Fall-2018/" + sys.argv[1] + "-" + gitusername.replace("\n", "") + ".git")
-        os.system("mkdir " + bID)
-        os.system("mv " + sys.argv[1] + "-" + gitusername.replace("\n", "") + " " + bID)
-        os.system("mv " + bID + " " + sys.argv[1])
+        os.system(f'git clone https://github.com/Binghamton-CS140-A0-Fall-2018/{sys.argv[1]}-{gitusername.strip()}.git')
+        os.system(f'mkdir {bID}')
+        os.system(f'mv {sys.argv[1]}-{gitusername.strip()} {bID}')
+        os.system(f'mv {bID} {sys.argv[1]}')
 
-        # #now we want to ensure we get the commit that the student wants graded
+        ##now we want to ensure we get the commit that the student wants graded
         p = subprocess.Popen(["git checkout",\
                              name_to_hash_mapping[student_name]],\
                              cwd = sys.argv[1] + os.sep + bID +\
@@ -120,7 +132,6 @@ def main():
         students_wo_commit_hash.append(student_name)
     else:
       students_wo_githubs.append(student_name)
-
 
   print(f'Successfully cloned repos from {num_repos_cloned} students out of a possible {len(students_of_interest)}.')
   print(f'{len(students_wo_githubs)} have no github username on file.')
