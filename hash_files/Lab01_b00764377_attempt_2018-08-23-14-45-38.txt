@@ -1,7 +1,7 @@
 Name: Parampreet Parmar (b00764377)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 2:45:38 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>64ca462b7a3722da124c2d43eb337156d2d99098</p>

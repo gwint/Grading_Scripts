@@ -1,7 +1,7 @@
 Name: Tavish Srivastava (b00693064)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 11:32:09 AM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>ae08ffc3682da888e7893e00760bd1ab3a87bf42</p>

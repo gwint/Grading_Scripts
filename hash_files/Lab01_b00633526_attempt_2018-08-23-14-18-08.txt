@@ -1,7 +1,7 @@
 Name: Justin Chassin (b00633526)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 2:18:08 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>c009a83e57c355ffd3748aa86ff1c2c612467d45</p>

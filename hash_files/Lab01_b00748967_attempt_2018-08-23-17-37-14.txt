@@ -1,7 +1,7 @@
 Name: Jiaxing Chen (b00748967)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 5:37:14 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>63bda4c4cd12ff2acaafcb5d482d38ec3ba6c599</p>

@@ -1,7 +1,7 @@
 Name: Renze Chen (b00767193)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 2:11:34 PM EDT
-Current Grade: Needs Grading
+Current Grade: 8
 
 Submission Field:
 <p>158833d3a531919d7d8d8a5316f252ecb1868e0b</p>

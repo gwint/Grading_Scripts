@@ -1,7 +1,7 @@
 Name: Bynn Lee (b00660818)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 5:15:23 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>652bc273090cd770900a2f69eac399d6d475f674</p>

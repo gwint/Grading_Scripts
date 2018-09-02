@@ -1,7 +1,7 @@
 Name: Lijing Xu (b00750463)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 11:56:17 AM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p><span class="sha-block"><span class="sha user-select-contain">118ae6e897a7e20efaa03fdb8100a804824c4749</span></span></p>

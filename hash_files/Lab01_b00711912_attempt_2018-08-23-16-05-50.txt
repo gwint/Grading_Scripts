@@ -1,7 +1,7 @@
 Name: Xingyue Zhan (b00711912)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 4:05:50 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>4977cd9c30d00d8234c5cd1ff85672c5cad42400</p>

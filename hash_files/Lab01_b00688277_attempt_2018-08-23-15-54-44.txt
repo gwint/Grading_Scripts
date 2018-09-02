@@ -1,7 +1,7 @@
 Name: James Woyevodsky (b00688277)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 3:54:44 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>70e9b112e1d2b6f92014140bca6de284079ccbd0</p>

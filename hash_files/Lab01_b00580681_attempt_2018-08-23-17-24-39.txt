@@ -1,7 +1,7 @@
 Name: Ariel Khatchatourian (b00580681)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 5:24:39 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10.00
 
 Submission Field:
 <p>3c7007e197a10c5f2b9d31e36e9291149a271b6d</p>

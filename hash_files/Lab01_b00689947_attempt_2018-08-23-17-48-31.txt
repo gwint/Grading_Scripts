@@ -1,7 +1,7 @@
 Name: Xinyi Huang (b00689947)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 5:48:31 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>3281b028520e25ecc6cab106b225a887d1c66eed</p>

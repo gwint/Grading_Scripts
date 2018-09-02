@@ -1,7 +1,7 @@
 Name: Janis Louie (b00680753)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 3:49:06 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>78bae34718bde1c8222b1b984019c5f366a19e56</p>

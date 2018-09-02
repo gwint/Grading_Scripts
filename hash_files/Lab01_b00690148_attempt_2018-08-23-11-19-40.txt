@@ -1,7 +1,7 @@
 Name: Teresa Chu (b00690148)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 11:19:40 AM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>71ff44877a12411d63939df6851e0fa9da512fc9</p>

@@ -1,7 +1,7 @@
 Name: Jeremy Philemon (b00766848)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 2:25:12 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>cfa49cc20851118631ebe08fac7c180a677f3dae</p>

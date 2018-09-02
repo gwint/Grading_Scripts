@@ -1,7 +1,7 @@
 Name: Tyler Wellington (b00698813)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 4:09:18 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>858de1269de10db0c506ac564f94709661fdb574</p>

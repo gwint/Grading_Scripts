@@ -1,7 +1,7 @@
 Name: Steven Bohn (b00662669)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 4:00:02 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>b6ee5cd96d0e5588bce700ad546a4f3457c84076</p>

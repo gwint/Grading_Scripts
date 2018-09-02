@@ -1,7 +1,7 @@
 Name: Edwin Codrington (b00660031)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 2:11:59 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>22ebc887854971b35e7b3cde0f345b759c01335f</p>

@@ -1,7 +1,7 @@
 Name: Sarbast Doski (b00760152)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 11:39:04 AM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>bff01112cca8dfed048f54b3bb8dcfdb78e27ac9</p>

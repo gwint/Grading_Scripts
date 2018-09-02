@@ -1,7 +1,7 @@
 Name: John Curtin (b00712324)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 5:47:47 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>ddf612a91fd6bb367b25420bf203b077190b8ab7</p>

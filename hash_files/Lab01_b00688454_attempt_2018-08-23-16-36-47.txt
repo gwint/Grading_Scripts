@@ -1,7 +1,7 @@
 Name: Adam Guarino (b00688454)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 4:36:47 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>cb1f612ffea57fdb20b2e15899f2d2f8fc952a04</p>

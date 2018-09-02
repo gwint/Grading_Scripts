@@ -1,7 +1,7 @@
 Name: Aidan Tweedy (b00688196)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 5:47:27 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10.00
 
 Submission Field:
 <p>a5d8ff07591a6c2159c6e97644fca36ec977ef2a</p>

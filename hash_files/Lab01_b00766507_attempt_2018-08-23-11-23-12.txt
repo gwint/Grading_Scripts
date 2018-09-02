@@ -1,7 +1,7 @@
 Name: Dhruv Nair (b00766507)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 11:23:12 AM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>190e0aaf9e6ab18174529abf3aaba37d97632d8a</p>

@@ -1,7 +1,7 @@
 Name: Qicheng Xiong (b00689885)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 5:58:44 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>47d59a1b673f6de83658e32b756c4af16d50b7f5</p>

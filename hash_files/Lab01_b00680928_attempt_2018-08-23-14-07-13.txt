@@ -1,7 +1,7 @@
 Name: Matthew Rivera (b00680928)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 2:07:13 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <pre style="width: 1.0px;height: 1.0px;top: 5.0px;">50f645a8e16281b32650ecf91b61c61757b59c92</pre> 

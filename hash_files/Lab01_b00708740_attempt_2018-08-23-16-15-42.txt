@@ -1,7 +1,7 @@
 Name: Harrison Wang (b00708740)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 4:15:42 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>faa208cc9644f4a56ab82a540ff95ca3010afc36</p>

@@ -1,7 +1,7 @@
 Name: Noah An (b00683417)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 4:18:19 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <pre style="width: 1.0px;height: 1.0px;top: 5.0px;">3df570d8694ef05b17e614985f5d4c0de2c0d8e1</pre> 

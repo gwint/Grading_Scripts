@@ -1,7 +1,7 @@
 Name: Colin Quelle (b00680367)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 5:51:04 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>df34193b7a19c029b32000c8a6513df7095f2814</p>

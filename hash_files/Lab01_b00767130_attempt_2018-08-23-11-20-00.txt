@@ -1,7 +1,7 @@
 Name: Julia Tucker (b00767130)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 11:20:00 AM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>8bf13652def36794b3ac1449e2f9f5dcbdd673f2</p>

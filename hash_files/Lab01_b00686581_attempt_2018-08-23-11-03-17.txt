@@ -1,7 +1,7 @@
 Name: David Walters (b00686581)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 11:03:17 AM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>6eb84803e7879203684262bbf5958b507421ad9f</p>

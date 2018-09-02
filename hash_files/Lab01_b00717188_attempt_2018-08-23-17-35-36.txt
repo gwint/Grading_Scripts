@@ -1,7 +1,7 @@
 Name: Michael Norton (b00717188)
 Assignment: Lab01
 Date Submitted: Thursday, August 23, 2018 5:35:36 PM EDT
-Current Grade: Needs Grading
+Current Grade: 10
 
 Submission Field:
 <p>59da557f537b9d3478b75adec07ecac76eebe6c0</p>
