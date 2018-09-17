@@ -60,9 +60,9 @@ def main():
   update_files = args.update_files
 
   students_of_interest += get_roster(A51_FILE)
-  # students_of_interest += get_roster(A52_FILE)
-  # students_of_interest += get_roster(A53_FILE)
-  # students_of_interest += get_roster(A54_FILE)
+  students_of_interest += get_roster(A52_FILE)
+  students_of_interest += get_roster(A53_FILE)
+  students_of_interest += get_roster(A54_FILE)
 
   os.system("mkdir " + sys.argv[1])
   num_repos_updated = 0
@@ -71,7 +71,10 @@ def main():
     bID = name_to_info_mapping[student_name][0]
     gitusername = name_to_info_mapping[student_name][1]
     if(name_to_info_mapping[student_name][1] != "NA"):
-        os.system(f'git clone https://github.com/Binghamton-CS140-A0-Fall-2018/{sys.argv[1]}-{gitusername.strip()}.git')
+        retVal = os.system(f'git clone https://github.com/Binghamton-CS140-A0-Fall-2018/{sys.argv[1]}-{gitusername.strip()}.git')
+        #if the repo doesn't exist, continue
+        if(retVal != 0):
+        	continue
         os.system(f'mkdir {bID}')
         for file in update_files:
         	os.system(f'cp {file} {sys.argv[1]}-{gitusername.strip()}')
