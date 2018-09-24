@@ -64,7 +64,6 @@ def main():
   students_of_interest += get_roster(A53_FILE)
   students_of_interest += get_roster(A54_FILE)
 
-  os.system("mkdir " + sys.argv[1])
   num_repos_updated = 0
 
   for student_name in students_of_interest:
@@ -75,40 +74,34 @@ def main():
         #if the repo doesn't exist, continue
         if(retVal != 0):
         	continue
-        os.system(f'mkdir {bID}')
         for file in update_files:
         	os.system(f'cp {file} {sys.argv[1]}-{gitusername.strip()}')
-        os.system(f'mv {sys.argv[1]}-{gitusername.strip()} {bID}')
-        os.system(f'mv {bID} {sys.argv[1]}')
 
         ##now we want to ensure we get the commit that the student wants graded
         p = subprocess.Popen(["git", "add",  "-A"],\
-                             cwd = sys.argv[1] + os.sep + bID +\
-                                 os.sep + sys.argv[1] + "-" +\
+                             cwd = sys.argv[1] + "-" +\
                                  gitusername.replace("\n", ""),\
                              shell=True)
         p.wait()
 
         p = subprocess.Popen(["git", "commit", "-m" ,"updating files"],\
-                             cwd = sys.argv[1] + os.sep + bID +\
-                                 os.sep + sys.argv[1] + "-" +\
+                             cwd = sys.argv[1] + "-" +\
                                  gitusername.replace("\n", ""),\
                              shell=True)
         p.wait()
 
         p = subprocess.Popen(["git", "push"],\
-                             cwd = sys.argv[1] + os.sep + bID +\
-                                 os.sep + sys.argv[1] + "-" +\
+                             cwd = sys.argv[1] + "-" +\
                                  gitusername.replace("\n", ""),\
                              shell=True)
         num_repos_updated += 1
         p.wait()
+        os.system("rm -rf " + sys.argv[1] + "-" + gitusername.replace("\n", ""))
     else:
       students_wo_githubs.append(student_name)
 
   print(f'Successfully updated repos of {num_repos_updated} students out of a possible {len(students_of_interest)}.')
   print(f'{len(students_wo_githubs)} have no github username on file.')
   print(students_wo_githubs)
-  os.system("rm -rf " + sys.argv[1])
 
 main()
