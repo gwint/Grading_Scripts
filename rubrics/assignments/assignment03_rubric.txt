@@ -1,0 +1,36 @@
+UniversityStudent worth 1 point
+	-implements Occupation
+	-transferUniversity()
+
+Student worth 1.5 points
+	-updated fields, getters, and constructor
+	-normalize() implemented correctly
+	-compareBnum() implemented correctly
+	-compareName() implemented correctly
+
+Person worth 1 point
+	-printHistory() updated and working
+	-List<Occupation> history implemented as LinkedList
+
+Occupation worth 1 point
+	-make sure method declared as an abstract method, no default behavior
+
+HighSchoolStudent worth 1 point
+	-implements Occupation
+	-changeHighSchool()
+
+Employee worth 1 point
+	-implements Occupation
+	-changeJob()
+
+ClassRoom worth 1.5 points
+	-dropStudent() updated properly
+	-sortById() updated properly
+	-sortByName()
+
+Driver worth 1 point
+	-person attends 2 HS, 2 Univ, and 2 Jobs
+
+ClassRoomTester worth 1 point
+	-sorts Students by ID, and also by name
+	

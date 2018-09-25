@@ -1,0 +1,6 @@
+Creating Book class with correct fields: 1 pt
+Creating array of Book objects: 1 pt
+Use of for loop to print book titles: 2 pts
+Use of enhanced for loop to print book length: 2 pts
+working numPagesInLibrary() method: 2 pts
+working mostPages() method: 2 pts

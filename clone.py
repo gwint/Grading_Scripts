@@ -152,7 +152,7 @@ def main():
   print(students_wo_commit_hash)
   hash = open(sys.argv[1] + "_noHash.txt", 'w')
   for name in students_wo_commit_hash:
-    error.write(name + "\n")
-  errors.close()
+    hash.write(name + "\n")
+  hash.close()
 
 main()

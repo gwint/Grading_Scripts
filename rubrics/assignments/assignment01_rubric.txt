@@ -1,0 +1,8 @@
+Person - worth 1.5 points
+Higschool - worth 1 point
+HighSchoolStudent - worth 1.5 point
+University - worth 1 point
+UniversityStudent - worth 1.5 point
+Employee - worth 1 point
+Company - worth 1 point
+Driver - worth 1.5 points
