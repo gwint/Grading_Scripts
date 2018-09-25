@@ -4,11 +4,12 @@ Division (3 points)
 	-constructor
 		-0.25 throws IllegalArgumentException if array is null
 		-0.25 throws IllegalArgumentException if array is empty
-		-0.5 copies values to list using get method properly
+		-0.5 copies values to list using add() method properly
 
-	-0.5 removeZeroes() implemented correctly
+	-removeZeroes()
 		-ideally using Iterators
-		-if not just make sure their functionality is correct
+		-0.25 if not just make sure their functionality is correct
+		-0.25 does not skip zeroes right next to eachother in the list
 
 	-divide()
 		-0.25 throws IllegalArgumentException correctly
@@ -22,7 +23,7 @@ FunWithStrings (3 points)
 		-0.25 throws exception if either array is empty
 		-0.5 throws exception if either array contains all null Strings
 		-1 extracts max strings and their corresponding indices properly
-		-1 properly swaps the maxes
+		-1 properly swaps the maxes using set()
 
 Zipper (2 points)
 	-0.25 throws exception if either array is null
