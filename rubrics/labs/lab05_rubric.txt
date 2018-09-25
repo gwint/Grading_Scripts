@@ -1,0 +1,33 @@
+Division (3 points)
+	- 0.5 initialized list to new empty ArrayList properly
+
+	-constructor
+		-0.25 throws IllegalArgumentException if array is null
+		-0.25 throws IllegalArgumentException if array is empty
+		-0.5 copies values to list using get method properly
+
+	-0.5 removeZeroes() implemented correctly
+		-ideally using Iterators
+		-if not just make sure their functionality is correct
+
+	-divide()
+		-0.25 throws IllegalArgumentException correctly
+		-0.25 uses the set method to alter list properly
+
+	-0.5 toString() method is present and correct
+
+FunWithStrings (3 points)
+	-swapMaxes()
+		-0.25 throws exception if either array is null
+		-0.25 throws exception if either array is empty
+		-0.5 throws exception if either array contains all null Strings
+		-1 extracts max strings and their corresponding indices properly
+		-1 properly swaps the maxes
+
+Zipper (2 points)
+	-0.25 throws exception if either array is null
+	-0.25 throws exception if arrays are different lengths
+	-1 zips arrays together properly otherwise
+
+Tester (worth 2 pts)
+	-passes all test cases provided
