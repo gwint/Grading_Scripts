@@ -19,11 +19,12 @@ Division (3 points)
 
 FunWithStrings (3 points)
 	-swapMaxes()
-		-0.25 throws exception if either array is null
-		-0.25 throws exception if either array is empty
+		-0.5 throws exception if either array is null
+		-0.5 throws exception if either array is empty
 		-0.5 throws exception if either array contains all null Strings
-		-1 extracts max strings and their corresponding indices properly
-		-1 properly swaps the maxes using set()
+		-0.5 checks and ignores null Strings while finding the max
+		-0.5 extracts max strings and their corresponding indices properly
+		-0.5 properly swaps the maxes using set()
 
 Zipper (2 points)
 	-0.25 throws exception if either array is null
