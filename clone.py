@@ -120,9 +120,12 @@ def main():
         if x != 0:
         	error.append(student_name)
         	continue
-        os.system(f'mkdir {bID}')
-        os.system(f'mv {sys.argv[1]}-{gitusername.strip()} {bID}')
-        os.system(f'mv {bID} {sys.argv[1]}')
+        p = subprocess.Popen(["mkdir", bID], shell=True)
+        p.wait()
+        p = subprocess.Popen(["mv", sys.argv[1] + "-" + gitusername.strip(), bID])
+        p.wait()
+        p = subprocess.Popen(["mv", bID, sys.argv[1]])
+        p.wait()
 
         ##now we want to ensure we get the commit that the student wants graded
         p = subprocess.Popen(["git", "checkout",\
@@ -134,14 +137,22 @@ def main():
         num_repos_cloned += 1
         p.wait()
       else:
-        students_wo_commit_hash.append(student_name)
+        students_wo_commit_hash.append(student_name + " " + bID)
     else:
       students_wo_githubs.append(student_name)
 
   print(f'Successfully cloned repos from {num_repos_cloned} students out of a possible {len(students_of_interest)}.')
   print(f'{len(error)} users had errors occur.')
   print(error)
+  errors = open(sys.argv[1] + "_errors.txt", 'w')
+  for name in error:
+    error.write(name + "\n")
+  errors.close()
   print(f'{len(students_wo_commit_hash)} have no commit hash on file.')
   print(students_wo_commit_hash)
+  hash = open(sys.argv[1] + "_noHash.txt", 'w')
+  for name in students_wo_commit_hash:
+    error.write(name + "\n")
+  errors.close()
 
 main()
