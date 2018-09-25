@@ -118,7 +118,7 @@ def main():
         os.system("echo -------------" + student_name + "---------------------")
         x = os.system(f'git clone https://github.com/Binghamton-CS140-A0-Fall-2018/{sys.argv[1]}-{gitusername.strip()}.git')
         if x != 0:
-        	error.append(student_name)
+        	error.append(student_name + " " + bID)
         	continue
         p = subprocess.Popen(["mkdir", bID], shell=True)
         p.wait()
@@ -146,7 +146,7 @@ def main():
   print(error)
   errors = open(sys.argv[1] + "_errors.txt", 'w')
   for name in error:
-    error.write(name + "\n")
+    errors.write(name + "\n")
   errors.close()
   print(f'{len(students_wo_commit_hash)} have no commit hash on file.')
   print(students_wo_commit_hash)
