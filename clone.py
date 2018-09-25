@@ -108,19 +108,24 @@ def main():
 
   os.system("mkdir " + sys.argv[1])
   num_repos_cloned = 0
+  error = []
 
   for student_name in students_of_interest:
     bID = name_to_info_mapping[student_name][0]
     gitusername = name_to_info_mapping[student_name][1]
     if(name_to_info_mapping[student_name][1] != "NA"):
       if(student_name in name_to_hash_mapping.keys()):
-        os.system(f'git clone https://github.com/Binghamton-CS140-A0-Fall-2018/{sys.argv[1]}-{gitusername.strip()}.git')
+        os.system("echo -------------" + student_name + "---------------------")
+        x = os.system(f'git clone https://github.com/Binghamton-CS140-A0-Fall-2018/{sys.argv[1]}-{gitusername.strip()}.git')
+        if x != 0:
+        	error.append(student_name)
+        	continue
         os.system(f'mkdir {bID}')
         os.system(f'mv {sys.argv[1]}-{gitusername.strip()} {bID}')
         os.system(f'mv {bID} {sys.argv[1]}')
 
         ##now we want to ensure we get the commit that the student wants graded
-        p = subprocess.Popen(["git checkout",\
+        p = subprocess.Popen(["git", "checkout",\
                              name_to_hash_mapping[student_name]],\
                              cwd = sys.argv[1] + os.sep + bID +\
                                  os.sep + sys.argv[1] + "-" +\
@@ -134,8 +139,8 @@ def main():
       students_wo_githubs.append(student_name)
 
   print(f'Successfully cloned repos from {num_repos_cloned} students out of a possible {len(students_of_interest)}.')
-  print(f'{len(students_wo_githubs)} have no github username on file.')
-  print(students_wo_githubs)
+  print(f'{len(error)} users had errors occur.')
+  print(error)
   print(f'{len(students_wo_commit_hash)} have no commit hash on file.')
   print(students_wo_commit_hash)
 
