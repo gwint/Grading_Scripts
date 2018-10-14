@@ -20,7 +20,8 @@ Part 1 - 5 pts
   Tester
     0.75 points: flatten implemented correctly
     0.25 points: flatten2 implemented correctly
-    0.50 points: student tester uses compare with modified files and results
+    0.25 points: compare uses flatten and Scanner appropiately
+    0.25 points: student tester uses compare with modified files and results
                  are correct
     0.50 points: prints out results of both readArray() and readList2()
                  and they match
