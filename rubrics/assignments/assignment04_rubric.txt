@@ -15,13 +15,17 @@ Part 1 - 5 pts
   NumberReader2	
     - readString2() follows same structure as readString()
       (where appropiate) and works correctly based on tester output
-        0.75 points: functionality (Assn05Tester.java provided)
+        0.50 points: functionality (Assn05Tester.java provided)
     - readList2() follows same structure as readArray() (where
       appropiate) and works correctly based on tester output
-        0.75 points: functionality (Assn05Tester.java provided)
-  Tester
-    0.5 points: prints out results of both readArray() and readList2()
-                and they match
+        0.50 points: functionality (Assn05Tester.java provided)
+  Tester (1 pt)
+    0.25 points: flatten implemented correctly
+    0.25 points: flatten2 implemented correctly
+    0.25 points: student tester uses compare with modified files and results
+                 are correct
+    0.25 points: prints out results of both readArray() and readList2()
+                 and they match
 
 Part 2 - 5 pts
   1 point: Two electives added to Courses
