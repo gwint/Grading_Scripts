@@ -1,8 +1,6 @@
 Total Possible Points: 10
 
 Part 1 - 5 pts
-  0.5 points: signature of every method is correct
-
   NumberReader
     - readString() follows layout provided in assignment sheet has correct
       functionality
@@ -19,12 +17,12 @@ Part 1 - 5 pts
     - readList2() follows same structure as readArray() (where
       appropiate) and works correctly based on tester output
         0.50 points: functionality (Assn05Tester.java provided)
-  Tester (1 pt)
-    0.25 points: flatten implemented correctly
+  Tester
+    0.75 points: flatten implemented correctly
     0.25 points: flatten2 implemented correctly
-    0.25 points: student tester uses compare with modified files and results
+    0.50 points: student tester uses compare with modified files and results
                  are correct
-    0.25 points: prints out results of both readArray() and readList2()
+    0.50 points: prints out results of both readArray() and readList2()
                  and they match
 
 Part 2 - 5 pts
