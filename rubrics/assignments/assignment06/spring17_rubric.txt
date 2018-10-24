@@ -1,0 +1,45 @@
+Ques1 (worth 3 points)
+	-0.5 constructor
+		-0.25 handles neg case
+		-0.25 handles pos case
+		
+	-1.0 smallestFactor
+		-0.25 handles 0 edge case
+		-0.25 handles 1 edge case
+		-0.5 handles general case
+		
+	-1.0 factorize() 
+		-0.25 returns empty list for 0
+		-0.25 returns empty list for 1
+		-0.5 returns correct list for general case
+		
+	-0.5 toString()
+		-0.25 handles 0 and 1 edge case properly
+		-0.25 handles general case properly
+	
+Top (worth 3 points)
+	-0.5 constructor
+	-1.5 average
+		-0.5 handles null case, returning 0
+		-0.5 handles empty case, returning 0
+		-0.5 computes general case correctly
+	-1.0 max
+		-0.25 handles null case, returning Integer.MIN_VALUE
+		-0.25 handles empty case, returning Integer.MIN_VALUE
+		-0.5 returns max correctly in general case
+		
+Lower (worth 3 points)
+	-1.0 constructor
+		-0.5 uses super properly to set array field in parent
+		-0.5 initializes Lower's array field properly
+		
+	-1.0 average
+		-overridden properly and correct results
+		-8 assertions worth 0.125 each
+		
+	-1.0 max
+		-override properly and correct results
+		-8 assertions, worth 0.125 each
+		
+Tester (worth 1 point)
+	-correct results

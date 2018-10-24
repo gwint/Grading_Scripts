@@ -1,0 +1,29 @@
+Pagination (worth 4.5 points)
+	-1.0 constructor
+		-0.5 instantiates ints properly
+		-0.5 instantiates arrays properly
+	-0.5 setChapStartPage()
+		-implemented correctly
+	-0.5 assign()
+		-implemented correctly
+	-1.5 totalToRead() 
+		-0.5 accounts for the off by one error in difference between start and end of chap
+		-0.5 accounts for last chapter correctly
+		-0.5 gets the right result
+	-1.0 main in Pagination present and correct
+	
+Exercise(worth 3 points)
+	-3.0 modify method
+		-1.0 handles null case
+		-1.0 handles list.size() <= pos case
+		-1.0 handles list.size() > pos case
+	
+
+TweetQuestion(worth 2.5 points)
+	-1.0 constructor
+		-properly calls super() to initialize String in Question
+	-1.5 display() 
+		-0.5 attempts to override display method
+		-0.5 calls super.display() appropriately
+		-0.5 prints out extra text appropriately
+		

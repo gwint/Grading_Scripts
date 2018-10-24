@@ -1,0 +1,33 @@
+Website (worth 3 points)
+	0.5 constructor
+	0.5 getters (0.25 each)
+	0.5 toString
+	1.5 incrPop()
+		1 pt for correct implementation
+			-test case where pop will go over 10
+			-test case where pop will stay under 10
+		0.5 pt for throwing IllegalArgumentException
+			-test case where factor is negative
+
+Tester (worth 1 points)
+	is present, compiles, and effort shown
+
+Internet (worth 3 points)
+	0.25 constructor
+	0.25 addSite() 
+	0.25 getSites()
+	1 incPop
+		-0.5 increase by factor properly
+		-0.25 returns true if urlStr is present
+		-0.25 returns false if urlStr not in the list
+	1 profile
+		-implemented correctly
+	0.25 remSite()
+
+SnobbyInternet (worth 3 points)
+	1.5 constructor
+		1.0 calls super() correctly
+		0.5 sets threshold
+		
+	1.5 trim()
+		correctly removes all sites below a threshold specified
