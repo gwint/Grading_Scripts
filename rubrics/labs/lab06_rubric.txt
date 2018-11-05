@@ -53,7 +53,6 @@ BankTester (worth 3 points)
 		-0.25 adds 8 different Objects to objects, after initializing it to an empty array list
 	-0.5 dynamicDispatching()
 		-0.25 correctly prints out each BankAccount's toString()
-		-0.25 adds provided code to print out different prompts for different BankAccount subtypes
 		-0.25 prints each Object in objects to showcase different toString() behavior
 	-1.0 extra Tests
 		-0.5 has test where they deposit into each account and checks values with against toString() method, does the test correctly
