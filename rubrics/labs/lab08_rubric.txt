@@ -1,6 +1,5 @@
 Recursion(worth 6.5 points)
 	-1.0 factorial
-		-throws exception in n < 0
 		-handles base cases (0 or 1)
 		-correct recursive case
 	-0.5 squareRoot
