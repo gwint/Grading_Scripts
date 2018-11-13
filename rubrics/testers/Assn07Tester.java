@@ -38,22 +38,6 @@ class BankTester {
 		assertEquals(1001, testCustomer.getIdNum());
 	}
 	
-	@Test
-	@DisplayName("Test hasSavings() and hasChecking() getters directly")
-	void testHasSavingsGetter() {
-		Customer testCustomer1 = new Customer("Test Customer", 1001,
-				                          new SavingsAccount(1000, 0.05), null);
-		Customer testCustomer2 = new Customer("Test Customer", 1001, null,
-                new CheckingAccount(1000, 5));
-		
-		assertAll(
-				() -> assertEquals(true, testCustomer1.hasSavingsAccount()),
-				() -> assertEquals(false, testCustomer1.hasCheckingAccount()),
-				() -> assertEquals(false, testCustomer2.hasSavingsAccount()),
-				() -> assertEquals(true, testCustomer2.hasCheckingAccount())
-				);
-	}
-	
 	
 	@Test
 	@DisplayName("Check that all the accounts are set up correctly in the Bank")
