@@ -1,19 +1,16 @@
 Total Points Available: 12 (10 + 2)
 
-insert() method - 2.5 pts
-- 0 pts if recursion not used
-- 0.5 pts attempted w/recursion
-- 2 pts tester passed
+if insert() does not use recursion not used, then -3
 
-find() method - 2.5 pts
+find() method - 4 pts
 - 0 pts if recursion not used
 - 0.5 pts attempted w/recursion
-- 2 pts tester passed
+- 3.5 pts tester passed
 
-getElements() method - 2.5 pts
+getElements() method - 3.5 pts
 - 0 pts if recursion not used
 - 0.5 pts attempted w/recursion
-- 2 pts tester passed
+- 3 pts tester passed
 
 prettyPrint() method - 2.5 pts
 - 0 pts if recursion not used
