@@ -6,7 +6,7 @@ Streams.java - 10 pts available
 
 List<String> grabBingoNums(String) - 2 pts available
   0.5 pts - attempt made
-  1.5 pts - correct tester output
+  1.5 pts - correct tester output (5 test cases * 0.3 pts each)
 List<Integer> extractNums() - 2 pts available
   0.5 pts - attempt made
   1.5 pts - correct tester output
