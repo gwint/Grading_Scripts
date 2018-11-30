@@ -8,8 +8,7 @@ BankAccount (worth 3 points)
 	-0.25 reset()
 		-0.25 method present and zeroes static field properly
 	-0.5 toString()
-		-0.25 uses String.format() properly, correct String returned
-		-0.25 rounds money to 2 decimals
+		-0.5 correct String returned
 	-0.5 deposit()
 		-0.25 throws exception when amount is negative
 		-0.25 updates balance correctly
@@ -53,10 +52,9 @@ BankTester (worth 3 points)
 		-0.25 adds 8 different Objects to objects, after initializing it to an empty array list
 	-0.5 dynamicDispatching()
 		-0.25 correctly prints out each BankAccount's toString()
-		-0.25 adds provided code to print out different prompts for different BankAccount subtypes
 		-0.25 prints each Object in objects to showcase different toString() behavior
 	-1.0 extra Tests
-		-0.5 has test where they deposit into each account and checks values with against toString() method, does the test correctly
+		-0.5 has test where they deposit into each account and checks values against toString() method, does the test correctly
 		-0.5 has test where withdraw is checked, particularly on the CheckingAccounts, does the testing correctly
 	-1.0 passes all tests in BankTester
 

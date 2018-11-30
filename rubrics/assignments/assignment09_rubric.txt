@@ -1,0 +1,17 @@
+Total Points Available = 10
+
+Q1 - worth 4 pts
+  subStrs() - 2 pts
+    0.5 pts - attempt made
+    1.5 pts - correct tester ouptut
+  subStr1() - 2 pts
+    0.5 pts - attempt made
+    1.5 pts - correct tester ouptut
+
+Q2 - worth 3 pts
+  1 pt - NaiveQuickSort methods implemented
+  2 pts - tester output correct
+
+Q3 - worth 3 pts
+  1 pt - StringTree methods implemented
+  2 pts - tester output correct

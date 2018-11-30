@@ -11,7 +11,7 @@ correct abstract/concrete and extends/implements (worth 0.5)
 
 
 abstract Animal (worth 1 point) 
-	-0.25 overrides toString method with proper retVal
+	-0.25 overrides toString method
 	-0.25 added abstract String getAnimalName()
 	-0.25 private static Comparator<Animal> animalComp is present, and implemented as a lambda expression properly
 	-0.25 getter method, getComp(), for animalComp is present
@@ -19,13 +19,13 @@ abstract Animal (worth 1 point)
 abstract Carnivore (worth 1 point)
 	-0.25 abstract method prowl() present
 	-0.25 value constructor present to set fields, prey and predatoryLevel
-	-0.25 overrides toString properly
+	-0.25 overrides toString
 	-0.25 getters for prey and predatoryLevel are present
 
 abstract Heribvore (worth 1 point)
 	-0.25 abstract method graze() present
 	-value constructor present to set fields, foilage and aggressionLevel
-	-0.25 overrides toString properly
+	-0.25 overrides toString
 	-0.25 getters for foilage and aggressionLevel are present
 
 concrete Tiger (worth 2.0 points)
