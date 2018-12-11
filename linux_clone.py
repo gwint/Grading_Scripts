@@ -114,7 +114,7 @@ def main():
     bID = name_to_info_mapping[student_name][0]
     gitusername = name_to_info_mapping[student_name][1]
     if(name_to_info_mapping[student_name][1] != "NA"):
-      if(student_name in name_to_hash_mapping.keys()):
+      #if(student_name in name_to_hash_mapping.keys()):
         os.system("echo -------------" + student_name + "---------------------")
         x = os.system(f'git clone git@github.com:Binghamton-CS140-A0-Fall-2018/{sys.argv[1]}-{gitusername.strip()}.git')
         if x != 0:
@@ -128,16 +128,16 @@ def main():
         p.wait()
 
         ##now we want to ensure we get the commit that the student wants graded
-        p = subprocess.Popen(["git", "checkout",\
-                             name_to_hash_mapping[student_name]],\
-                             cwd = sys.argv[1] + os.sep + bID +\
-                                 os.sep + sys.argv[1] + "-" +\
-                                 gitusername.replace("\n", ""),\
-                             shell=True)
+        #p = subprocess.Popen(["git", "checkout",\
+                         #    name_to_hash_mapping[student_name]],\
+                         #    cwd = sys.argv[1] + os.sep + bID +\
+                          #       os.sep + sys.argv[1] + "-" +\
+                         #        gitusername.replace("\n", ""),\
+                        #     shell=True)
         num_repos_cloned += 1
         p.wait()
-      else:
-        students_wo_commit_hash.append(student_name + " " + bID)
+      #else:
+       # students_wo_commit_hash.append(student_name + " " + bID)
     else:
       students_wo_githubs.append(student_name)
 
