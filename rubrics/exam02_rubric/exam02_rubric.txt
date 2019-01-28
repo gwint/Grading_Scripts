@@ -1,0 +1,27 @@
+Question 1:
+
+1.5 BST question
+	-handles all 4 cases properly
+1.5 simple recursion question
+	-0.5 throws exception
+	-0.5 correct base case
+	-0.5 correct recursive case
+
+Question 2: Lambda / Interfaces
+	-1 creates interface correctly
+	-1 implements implementer via static method correctly
+	-1 showcases lambda expression correctly in tester
+
+Question 3:
+	PARENT
+	-0.5 throws exception in parent constructor
+	-1 correct methods 
+	-0.5 no getter for private fields presents
+
+	CHILD
+		-0.5 calls super() in constructor correctly
+		-0.5 throws exception correctly 
+		-1 overrides methods correctly
+
+
+
