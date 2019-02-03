@@ -59,9 +59,7 @@ def main():
   assn_name = args.assn_name
   update_files = args.update_files
 
-  students_of_interest += get_roster(A51_FILE)
-  students_of_interest += get_roster(A52_FILE)
-  students_of_interest += get_roster(A53_FILE)
+  ## TODO: Add more roster files
   students_of_interest += get_roster(A54_FILE)
 
   num_repos_updated = 0
@@ -70,33 +68,35 @@ def main():
     bID = name_to_info_mapping[student_name][0]
     gitusername = name_to_info_mapping[student_name][1]
     if(name_to_info_mapping[student_name][1] != "NA"):
-        retVal = os.system(f'git clone https://github.com/Binghamton-CS140-A0-Fall-2018/{sys.argv[1]}-{gitusername.strip()}.git')
+        retVal = os.system(f'git clone https://github.com/binghamtonuniversity-cs240/{sys.argv[1]}-spr18-{gitusername.strip()}.git')
         #if the repo doesn't exist, continue
         if(retVal != 0):
         	continue
         for file in update_files:
-        	os.system(f'cp {file} {sys.argv[1]}-{gitusername.strip()}')
+        	os.system(f'cp {file} {sys.argv[1]}-spr18-{gitusername.strip()}')
 
-        ##now we want to ensure we get the commit that the student wants graded
-        p = subprocess.Popen(["git", "add",  "-A"],\
-                             cwd = sys.argv[1] + "-" +\
-                                 gitusername.replace("\n", ""),\
-                             shell=True)
-        p.wait()
-
-        p = subprocess.Popen(["git", "commit", "-m" ,"updating files"],\
-                             cwd = sys.argv[1] + "-" +\
-                                 gitusername.replace("\n", ""),\
-                             shell=True)
-        p.wait()
-
-        p = subprocess.Popen(["git", "push"],\
-                             cwd = sys.argv[1] + "-" +\
-                                 gitusername.replace("\n", ""),\
-                             shell=True)
+        dirName = sys.argv[1] + "-spr18-" + gitusername.replace("\n", "")
+        os.system(f"cd {dirName}")
+        os.system("git add -A")
+        #p = subprocess.Popen(["git", "add",  "-A"],\
+        #                     cwd = sys.argv[1] + "-spr18-" +\
+        #                         gitusername.replace("\n", ""),\
+        #                     shell=True)
+        #p.wait()
+        os.system('git commit -m "updating the update"')
+        #p = subprocess.Popen(["git", "commit", "-m" ,"updating files"],\
+        #                     cwd = sys.argv[1] + "-spr18-" +\
+        #                         gitusername.replace("\n", ""),\
+        #                     shell=True)
+        #p.wait()
+        os.system("git push")
+        #p = subprocess.Popen(["git", "push"],\
+        #                     cwd = sys.argv[1] + "-spr18-" + \
+        #                         gitusername.replace("\n", ""),\
+        #                     shell=True)
         num_repos_updated += 1
-        p.wait()
-        os.system("rm -rf " + sys.argv[1] + "-" + gitusername.replace("\n", ""))
+        #p.wait()
+        #os.system("rm -rf " + sys.argv[1] + "-spr18-" + gitusername.replace("\n", ""))
     else:
       students_wo_githubs.append(student_name)
 
