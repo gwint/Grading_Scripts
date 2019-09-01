@@ -5,9 +5,9 @@ import csv
 from argparse import ArgumentParser
 from html.parser import HTMLParser
 
-COMMIT_HASHS_DIR = "hash_files" ## maps student name to commit hash
+COMMIT_HASHS_DIR = "/home/mllab/Desktop/CS140/Lab1" ## maps student name to commit hash
                                 ## (only of people who submitted)
-STUDENT_INFO_FILE = "students.csv"
+STUDENT_INFO_FILE = "studentGithubUsernames.csv"
 NAME_IDX = 0
 HASH_IDX = 6
 COMMENT_IDX = 9
@@ -17,6 +17,7 @@ A51_ROSTER = "a51_roster.csv"
 A52_ROSTER = "a52_roster.csv"
 A53_ROSTER = "a53_roster.csv"
 A54_ROSTER = "a54_roster.csv"
+FULL_ROSTER = "full_roster.csv"
 
 def get_roster(roster_file):
   roster = []
@@ -91,6 +92,7 @@ def main():
   parser.add_argument("-a52", action="store_true")
   parser.add_argument("-a53", action="store_true")
   parser.add_argument("-a54", action="store_true")
+  parser.add_argument("-full", action="store_true")
 
   students_of_interest = []
   args = parser.parse_args()
@@ -105,6 +107,8 @@ def main():
     students_of_interest += get_roster(A53_ROSTER)
   if(args.a54):
     students_of_interest += get_roster(A54_ROSTER)
+  if(args.full):
+    students_of_interest += get_roster(FULL_ROSTER)
 
   os.system("mkdir " + sys.argv[1])
   num_repos_cloned = 0
@@ -116,7 +120,7 @@ def main():
     if(name_to_info_mapping[student_name][1] != "NA"):
       #if(student_name in name_to_hash_mapping.keys()):
         os.system("echo -------------" + student_name + "---------------------")
-        x = os.system(f'git clone git@github.com:Binghamton-CS140-A0-Fall-2018/{sys.argv[1]}-{gitusername.strip()}.git')
+        x = os.system(f'git clone git@github.com:Binghamton-CS140-A0-Fall-2019/{sys.argv[1]}-{gitusername.strip()}.git')
         if x != 0:
         	error.append(student_name + " " + bID)
         	continue

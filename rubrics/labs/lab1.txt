@@ -1,0 +1,4 @@
+Filled Google Form +2
+Submitted Hash and pushed to Github +2
+getMoney() in Loanee.java is correct +2
+LoanSimulation.java tests has correct output +4

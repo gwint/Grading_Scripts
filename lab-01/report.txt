@@ -1,0 +1,312 @@
+
+
+Hanoch Stein
+Grade: 6
+
+
+Matthew Foster
+Grade: 6
+
+
+Kenneth Gell
+getMoney wrong return type: double
+Grade: 4
+
+
+Nicholas DAgostino
+Grade: 6
+
+
+Jason Vail
+Grade: 6
+
+
+Diwen Huang
+Grade: 6
+
+
+Andrew Curreri
+getMoney wrong return type: double
+Grade: 4
+
+
+Sarah OShay
+Grade: 6
+
+
+Marcus Muffoletto
+getMoney wrong return type: double
+Grade: 4
+
+
+Jack Stanley
+getMoney wrong return type: double
+Grade: 4
+
+
+Adiel Felsen
+getMoney wrong return type: double
+Grade: 4
+
+
+Dyandra Allen
+getMoney wrong return type: double
+Grade: 4
+
+
+Nicholas Grosso
+getMoney wrong return type: double
+Grade: 4
+
+
+Yichen Tao
+getMoney wrong return type: double
+Grade: 4
+
+
+Andrew Horihan
+Grade: 6
+
+
+Moen Aziz
+Grade: 6
+
+
+Elisha Aghajani
+getMoney wrong return type: double
+Grade: 4
+
+
+Mingming Jiang
+Grade: 6
+
+
+Spiros Rally
+getMoney wrong return type: double
+Grade: 4
+
+
+Eric Shapiro
+getMoney wrong return type: double
+Grade: 4
+
+
+Shance Lin
+Grade: 6
+
+
+Maximo Olavarria
+getMoney wrong return type: double
+Grade: 4
+
+
+Samson Grimm
+getMoney wrong return type: double
+Grade: 4
+
+
+Xavier Chen
+Grade: 6
+
+
+Ryan Klein
+Grade: 6
+
+
+Michael Arseneau
+Grade: 6
+
+
+Andrei Georgescu
+Grade: 6
+
+
+Kieran Gaffney
+Grade: 6
+
+
+Farrukh Almatov
+Grade: 6
+
+
+Anjali Kapur
+getMoney wrong return type: double
+Grade: 4
+
+
+Aidan Heffernan
+getMoney wrong return type: double
+Grade: 4
+
+
+Thomas Loja
+getMoney wrong return type: double
+Grade: 4
+
+
+Ryan Geary
+Grade: 6
+
+
+Jordan Huyghue
+Grade: 6
+
+
+William Cornejo
+Grade: 6
+
+
+Ethan Lancer
+getMoney wrong return type: double
+Grade: 4
+
+
+Danny Lockyer
+getMoney wrong return type: double
+Grade: 4
+
+
+Tyler Katz
+Grade: 6
+
+
+Korhan Citlak
+getMoney wrong return type: double
+Grade: 4
+
+
+John Tricozzi
+Grade: 6
+
+
+Kevin Agyapong
+getMoney wrong return type: double
+Grade: 4
+
+
+Hieu Pham
+Grade: 6
+
+
+Cat Tran
+Grade: 6
+
+
+Maxwell Ruffner
+getMoney wrong return type: double
+Grade: 4
+
+
+Xuan Cai
+Grade: 6
+
+
+Adam Kunz
+Grade: 6
+
+
+Javier Liu
+Grade: 6
+
+
+Barrett Sweet
+getMoney wrong return type: double
+LoanSimulation.java case 2 wrong
+Grade: 3
+
+
+Cindy Guo
+getMoney wrong return type: double
+Grade: 4
+
+
+Nickolas De Dios
+Grade: 6
+
+
+Ridley Cheung
+Grade: 6
+
+
+ethan breban
+Grade: 6
+
+
+Dorian Petzold
+getMoney wrong return type: double
+Grade: 4
+
+
+Peifeng Wang
+getMoney wrong return type: double
+Grade: 4
+
+
+Matthew Krauze
+getMoney wrong return type: double
+Grade: 4
+
+
+Adam Bloodgood
+getMoney wrong return type: double
+Grade: 4
+
+
+Aneudys Germosen
+getMoney wrong return type: double
+Grade: 4
+
+
+Allison Waring
+getMoney wrong return type: double
+Grade: 4
+
+
+Rutvik Saptarshi
+LoanSimulation.java case 3 wrong
+Grade: 5
+
+
+Joseph DeFlorio
+Grade: 6
+
+
+Cole Cipp
+getMoney wrong return type: double
+Grade: 4
+
+
+Daniel Paskalev
+Grade: 6
+
+
+Anthony Longo
+Grade: 6
+
+
+Benjamin Martinez
+LoanSimulation.java case 3 wrong
+Grade: 5
+
+
+Tyler Gilbert
+getMoney wrong return type: double
+Grade: 4
+
+
+Matthew Pecha
+getMoney wrong return type: double
+Grade: 4
+
+
+Andrew Ricci
+Grade: 6
+
+
+jongjun kim
+getMoney wrong return type: double
+Grade: 4
+
+
+Ahbab Ashraf
+Grade: 6

@@ -149,6 +149,7 @@ def main():
             if(studentName in nameToHashMapping):
                 os.system("echo -------------" + studentName + "---------------------")
                 x = os.system(f'git clone https://github.com/binghamton-cs140-a0-fall-2019/{sys.argv[1]}-{gitusername.strip()}.git')
+                #x = os.system(f'git clone git@github.com:Binghamton-CS140-A0-Fall-2019/{sys.argv[1]}-{gitusername.strip()}.git')
                 if x != 0:
         	        error.append(studentName + " " + bID)
         	        continue
