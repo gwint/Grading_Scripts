@@ -1,0 +1,10 @@
++1 for title getter
++1 for numPages getter
++4 for numPagesInLibrary(Book[]) (2 pts for 2 test cases)
++4 for Library.mostPages(booksArray1) (3 test cases)
+
+For students whose code doesnt compile, I give at most 4 points based on effort.
+
+The only exception is when it doesn't compile due to github merge conflicts. Then I give up to 8 points.
+
+-1 for not including package name
