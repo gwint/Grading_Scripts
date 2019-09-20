@@ -19,7 +19,7 @@ the commit hash submitted to MyCourses by the student.
 
 Steps to grade an assignment:
 
-1. Clone ALL assignments into some folder folder_name (can be any name)
+1. Clone ALL assignments into some folder lab-XX (XX should be lab or assignment number)
 
 2. Write rubric, add in rubrics/assignments or rubrics/labs folder
 
@@ -31,11 +31,11 @@ Steps to grade an assignment:
 
 4. Change the following in runTester.py:
 
-	- assignment_name must be folder_name
+	- assignment_name must be lab-XX
 	- package_name must be name of package that students wrote code in
 	- tester_file_path must be path where tester is located
 
 
-5. Run python3 runTester.py. Results for each student, along with your tester error messages will appear in report.txt, located in folder_name
+5. Run python3 runTester.py. Results for each student, along with your tester error messages will appear in report.txt, located in lab-XX
 
 

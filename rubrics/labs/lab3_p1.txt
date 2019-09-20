@@ -1,0 +1,1 @@
+1 point for each math function (0.25 per test case)

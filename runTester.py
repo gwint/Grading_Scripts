@@ -1,9 +1,9 @@
 import os
 import csv
 
-assignment_name = "lab-02"
-package_name = "lab02"
-tester_file_path = "/home/mllab/Desktop/CS140/Grading_Scripts/Testers/Labs/Lab02_Grader.java"
+assignment_name = "lab-03"
+package_name = "lab03"
+tester_file_path = "/home/mllab/Desktop/CS140/Grading_Scripts/Testers/Labs/Lab03_Grader_P2.java"
 
 path_to_submissions = "/home/mllab/Desktop/CS140/Grading_Scripts/" + assignment_name + '/'
 STUDENT_INFO_FILE = "studentGithubUsernames.csv"
@@ -45,10 +45,11 @@ for student in student_folders:
 		f = open(path_to_submissions+"report.txt",'a')
 
 		#Append student name to report.txt
+		print(student)
 		f.write('\n\n' + id_to_name[student] + '\n')
 
 		#Get path to particular students code
-		path_to_code = path_to_submissions+student+'/'+assignment_name+'-'+id_to_github[student]+'/'
+		path_to_code = path_to_submissions+student+'/'+package_name+'-'+id_to_github[student]+'/'
 
 		print(path_to_code)
 		#Copy tester file to students code
