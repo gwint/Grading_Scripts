@@ -5,7 +5,7 @@ import csv
 from argparse import ArgumentParser
 from html.parser import HTMLParser
 
-COMMIT_HASHS_DIR = "/home/mllab/Desktop/CS140/Lab3_p2" ## maps student name to commit hash
+COMMIT_HASHS_DIR = "/home/mllab/Desktop/CS140/lab05" ## maps student name to commit hash
                                 ## (only of people who submitted)
 STUDENT_INFO_FILE = "studentGithubUsernames.csv"
 NAME_IDX = 0

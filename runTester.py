@@ -1,11 +1,11 @@
 import os
 import csv
 
-assignment_name = "lab-03"
-package_name = "lab03"
-tester_file_path = "/home/mllab/Desktop/CS140/Grading_Scripts/Testers/Labs/Lab03_Grader_P2.java"
+#assignment_name = "Lab05"
+package_name = "lab05"
+tester_file_path = "/home/mllab/Desktop/CS140/Grading_Scripts/Testers/Labs/Lab05_Grader.java"
 
-path_to_submissions = "/home/mllab/Desktop/CS140/Grading_Scripts/" + assignment_name + '/'
+path_to_submissions = "/home/mllab/Desktop/CS140/Grading_Scripts/Lab05/"
 STUDENT_INFO_FILE = "studentGithubUsernames.csv"
 
 #Get just the tester name, without the .java extension
@@ -31,7 +31,9 @@ def get_student_info():
 
 #Get name of all student folders
 student_folders = [name for name in os.listdir(path_to_submissions)]
+student_folders.sort()
 print("Grading", len(student_folders), "Assignments")
+
 
 #Map student id to github id
 id_to_github, id_to_name = get_student_info()
@@ -59,6 +61,8 @@ for student in student_folders:
 			f.write("Failed to copy over tester, this message should never appear!!\n")
 
 		#compile (including tester)
+		#javac -cp /usr/share/java/junit4.jar TestBasicLinkedList.java
+		#call2 = os.system("javac -cp .:/usr/share/java/junit4-4.12.jar -d . "+path_to_code+"*.java")		
 		call2 = os.system("javac -d . "+path_to_code+"*.java")
 
 		if(call2 != 0):
@@ -72,6 +76,9 @@ for student in student_folders:
 			#Run tester. The tester appends the grade and errors to report.txt
 			#We don't need to point to students folder to run, as .class files
 			#are saved directly to Grading_Scripts/
+
+			#java -cp .:/usr/share/java/junit4-4.12.jar 
+			#call3 = os.system("java -cp .:/usr/share/java/junit4-4.12.jar "+package_name+'.'+tester_file_name)
 			call3 = os.system("java "+package_name+'.'+tester_file_name)
 
 			if(call3 != 0):
@@ -85,5 +92,4 @@ for student in student_folders:
 				f = open(path_to_submissions+"report.txt",'a')
 				f.write("Failed to remove .class files. This should never appear.\n")
 				f.close()
-
 
