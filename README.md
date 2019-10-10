@@ -40,3 +40,9 @@ Steps to grade an assignment:
 6. Run python3 runTester.py. Results for each student, along with your tester error messages will appear in report.txt, located in labXX
 
 
+## Running a junit tester via the command line
+
+1) Download [junit-4.12.jar](http://www.java2s.com/example/jar/j/download-junit412jar-file.html) and [hamcrest-core-1.3.jar](https://search.maven.org/search?q=g:org.hamcrest).
+2) Create your junit test class.
+3) Compile your code and test class using the following command: javac -d . *.java -cp /path/to/junit/jar/file/junit-4.12.jar ./<Insert test class name here>.java
+4) Run the tests using the following command: java -cp .:./path/to/junit/jar/file/junit-4.12.jar:/path/to/hamcrest/jar/file/hamcrest-core-1.3.jar org.junit.runner.JUnitCore packagename.<Insert test class name>
