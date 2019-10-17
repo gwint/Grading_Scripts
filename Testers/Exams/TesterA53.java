@@ -4,539 +4,421 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class TesterA53 {
-	
 	private static PrintStream out = System.out;
 	private static int numWrong;
 	private static int testNum = 0;
+
 	public static void main(String[] args) throws FileNotFoundException {
 		// can change output here
-		out = new PrintStream(new FileOutputStream(new File("exam01-a53/report.txt"), true));
-		//out = new PrintStream(new FileOutputStream(new File("report54.txt"), true));
-		testQ1();
-		out.println("--------------------");
-		testQ2();
-		out.println("--------------------");
-		out.println(numWrong + " tests 1-36 failed");
-		out.println("lost " + (numWrong/6.0) + " points");
-		double grade = 10.0 - numWrong/6.0;
+		out = new PrintStream(new FileOutputStream(new File("exam01makeupA53/report.txt"), true));
 		numWrong = 0;
-		testQ3();
+		
+		try{
+			++testNum;
+			new Part1(1,1);
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: new Part1(1,1) gave no Exception");
+		} catch(IllegalArgumentException e){
+			testEquality("Bad input", e.getMessage(), "TEST " + testNum + " new Part1(1,1)\n");
+		} catch(Exception e){
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: new Part1(1,1)");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);
+		}
+		try{
+			++testNum;
+			new Part1(1,1,1,1,1,1);
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: new Part1(1,1,1,1,1,1) gave no Exception");
+		} catch(IllegalArgumentException e){
+			testEquality("Bad...", e.getMessage().substring(0,3)+"...", "TEST " + testNum + " new Part1(1,1,1,1,1,1)\n");
+		} catch(Exception e){
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: new Part1(1,1,1,1,1)");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);
+		}
+		Part1 actual4 = null;
+		try {
+			++testNum;	
+			actual4 = new Part1(15,7,11,20,7); 
+			String expected = "$15 7q 11d 20n 7p";
+			if(!testEquality(expected, "" + actual4, "TEST " + testNum + " new Part1(15,7,11,20,7)\n")) {
+				out.println("Constructor problem");
+				out.println("$18 3q 1d 1n 2p is also OK--it is the normalized value");
+				out.println("If neither value, then please check the student's constructor");
+				out.println("Here is my constructor, replace with with this one");
+				out.println("	public Part1(int... amounts) {\n" + 
+						"		if(amounts.length != 5) throw new IllegalArgumentException(\"bad input\");\n" + 
+						"		for(int i = 0; i < 5; i++) money[i] = amounts[i];\n" + 
+						"	}\n"); 
+				
+			}
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: new Part1(15,7,11,20,7)");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		try {
+			++testNum;	
+			actual4 = new Part1(-1); 
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: new Part1(-1) gave no Exception");
+		} catch(IllegalArgumentException e){
+			testEquality("Bad...", e.getMessage().substring(0,3)+"...", "TEST " + testNum + " new Part1(-1)\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: new Part1(20,30,70,80)");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		try {
+			++testNum;	
+			actual4 = new Part1(1667); 
+			String expected = "$16 2q 1d 1n 2p";
+			testEquality(expected, "" + actual4, "TEST " + testNum + " new Part1(1667)\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: new Part1(1667)");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		try {
+			++testNum;	
+			actual4 = new Part1(20,10,12,13,14);
+			int value = actual4.valueInCents();
+			String expected = "2449";
+			testEquality(expected, "" + value, "TEST " + testNum + " valueInCents()\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: valueInCents");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		try {
+			++testNum;	
+			actual4 = new Part1(13,23,11,19,18);
+			actual4 = actual4.multiply(-7);
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: new Part1(13,23,11,19,18).multiply(-7) gave no Exception");
+		} catch(IllegalArgumentException e){
+			testEquality("Bad...", e.getMessage().substring(0,3)+"...", "TEST " + testNum + " new Part1(13,23,11,19,18).multiply(-7)\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: new Part1(13,23,11,19,18).multiply(-7)");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		try {
+			++testNum;	
+			actual4 = new Part1(13,23,11,19,18);
+			actual4 = actual4.multiply(0);
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: new Part1(13,23,11,19,18).multiply(0) gave no Exception");
+		} catch(IllegalArgumentException e){
+			testEquality("Bad...", e.getMessage().substring(0,3)+"...", "TEST " + testNum + " new Part1(13,23,11,19,18).multiply(0)\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: new Part1(13,23,11,19,18).multiply(0)");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		try {
+			++testNum;	
+			actual4 = new Part1(13,23,11,19,18);
+			actual4 = actual4.multiply(7);
+			String expected = "$146 3q 1d 0n 1p";
+			testEquality(expected, "" + actual4, "TEST " + testNum + " new Part1(13,23,11,55).multiply(7))\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: multiply");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		try {
+			++testNum;	
+			actual4 = new Part1(13,23,11,19,18);
+			actual4 = actual4.divide(-7);
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: new Part1(13,23,11,19,18).divide(-7) gave no Exception");
+		} catch(IllegalArgumentException e){
+			testEquality("Bad...", e.getMessage().substring(0,3)+"...", "TEST " + testNum + " new Part1(13,23,11,19,18).divide(-7)\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: new Part1(13,23,11,19,18).divide(-7)");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		try {
+			++testNum;	
+			actual4 = new Part1(13,23,11,19,18);
+			actual4 = actual4.divide(0);
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: new Part1(13,23,11,19,18).divide(0) gave no Exception");
+		} catch(IllegalArgumentException e){
+			testEquality("Bad...", e.getMessage().substring(0,3)+"...", "TEST " + testNum + " new Part1(13,23,11,19,18).divide(0)\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: new Part1(13,23,11,19,18).divide(0)");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		try {
+			++testNum;	
+			actual4 = new Part1(13,23,11,19,18);
+			actual4 = actual4.divide(7);
+			String expected = "$2 3q 2d 0n 4p";
+			testEquality(expected, "" + actual4, "TEST " + testNum + " new Part1(13,23,11,55).divide(7))\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: divide");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		try {
+			++testNum;	
+			actual4 = new Part1(13,2,11,5,7);
+			actual4.add(new Part1(1,23,9,19,6));
+			String expected = "$14 25q 20d 24n 13p";
+			testEquality(expected, "" + actual4, "TEST " + testNum + " new Part1(13,2,11,5,7).add(new Part1(1,23,9,19,6))\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: add");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		try {
+			++testNum;	
+			actual4 = new Part1(15,7,11,20,7);
+			actual4.normalize();
+			String expected = "$18 3q 1d 1n 2p";
+			testEquality(expected, "" + actual4, "TEST " + testNum + " new Part1(15,7,11,20,7).normalize()\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: normalize");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}		
+		String actual = "BAD RESULT";
+		try {
+			++testNum;	
+			actual = Part2.cropToFirstVowel(null); 
+			testEquality("null", "" + actual, "TEST " + testNum + " cropToFirstVowel(null)\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: cropToFirstVowel(null)");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		try {
+			++testNum;	
+			actual = Part2.cropToFirstVowel(""); 
+			testEquality("", "" + actual, "TEST " + testNum + " cropToFirstVowel(\"\")\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: cropToFirstVowel(\"\")");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		try {
+			++testNum;	
+			actual = Part2.cropToFirstVowel("sdfasdf"); 
+			testEquality("asdf", "" + actual, "TEST " + testNum + " cropToFirstVowel(\"sdfasdf\")\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: cropToFirstVowel(\"sdfasdf\")");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		try {
+			++testNum;	
+			actual = Part2.cropToFirstVowel("a"); 
+			testEquality("a", "" + actual, "TEST " + testNum + " cropToFirstVowel(\"a\")\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: cropToFirstVowel(\"a\")");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		try {
+			++testNum;	
+			actual = Part2.cropToFirstVowel("123"); 
+			testEquality("123", "" + actual, "TEST " + testNum + " cropToFirstVowel(\"123\")\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: cropToFirstVowel(\"123\")");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		try {
+			++testNum;	
+			actual = Part2.cropToFirstVowel("rhythm"); 
+			testEquality("ythm", "" + actual, "TEST " + testNum + " cropToFirstVowel(\"rhythm\")\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: cropToFirstVowel(\"rhythm\")");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		try {
+			++testNum;	
+			actual = Part2.cropToFirstVowel("Yellow"); 
+			testEquality("Yellow", "" + actual, "TEST " + testNum + " cropToFirstVowel(\"Yellow\")\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: cropToFirstVowel(\"Yellow\")");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		List<Integer> actual1 = List.of(-1000);
+		try {
+			++testNum;	
+			actual1 = Part2.lastVowelOrY(null); 
+			testEquality("null", "" + actual1, "TEST " + testNum + " lastVowelOrY(null)\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: lastVowelOrY(null)");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		try {
+			++testNum;	
+			actual1 = Part2.lastVowelOrY(new ArrayList<>()); 
+			testEquality("[]", "" + actual1, "TEST " + testNum + " lastVowelOrY(empty)\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: lastVowelOrY(empty)");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		List<String> test = null;
+		try {
+			++testNum;
+			test = new ArrayList<>(Arrays.asList("Helper", "Elephant", "Rhythm", "ant", "Psychology", "Schtschurowskia"));
+			actual1 = Part2.lastVowelOrY(test); 
+			testEquality("[4, 5, 2, 0, 9, 14]", "" + actual1, "TEST " + testNum + ": lastVowelOrY(" + test + ")\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: lastVowelOrY(" + test + ")");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}		
+		try {
+			++testNum;
+			test = new ArrayList<>(Arrays.asList("Helper", "Elephant", "Rhythm", "ant", null, "Psychology", "Schtschurowskia"));
+			actual1 = Part2.lastVowelOrY(test); 
+			testEquality("[4, 5, 2, 0, -1, 9, 14]", "" + actual1, "TEST " + testNum + ": lastVowelOrY(" + test + ")\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: lastVowelOrY(" + test + ")");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}		
+		List<Part1> test1 = null;
+		try{
+			++testNum;
+			test1 = null;
+			Part2.notLargestOrSmallest(test1);
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: notLargestOrSmallest(null) gave no Exception");
+		} catch(IllegalArgumentException e){
+			testEquality("Bad list", e.getMessage(), "TEST " + testNum + " notLargestOrSmallest(null)\n");
+		} catch(Exception e){
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: notLargestOrSmallest(null)");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);
+		}
+		try{
+			++testNum;
+			test1 = new ArrayList<>();
+			Part2.notLargestOrSmallest(test1);
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: notLargestOrSmallest(empty) gave no Exception");
+		} catch(IllegalArgumentException e){
+			testEquality("Bad...", e.getMessage().substring(0,3) + "...", "TEST " + testNum + " notLargestOrSmallest(empty)\n");
+		} catch(Exception e){
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: notLargestOrSmallest(empty)");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);
+		}
+		try{
+			++testNum;
+			test1 = new ArrayList<>(Arrays.asList(
+					new Part1(20,10,12,13,14), new Part1(21,10,12,13,14), null,  
+					new Part1(19,10,12,13,14),new Part1(22,10,12,13,14),new Part1(20,12,12,13,14),new Part1(21,9,12,13,14),
+					new Part1(21,10,12,13,14),new Part1(19,10,12,13,14),new Part1(20,8,12,13,14),new Part1(21,6,12,13,14)));
+			Part2.notLargestOrSmallest(test1);
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: notLargestOrSmallest(" + test1 + ") gave no Exception");
+		} catch(IllegalArgumentException e){
+			testEquality("Bad...", e.getMessage().substring(0,3) + "...", "TEST " + testNum + " notLargestOrSmallest(" + test1 + ")\n");	
+		} catch(Exception e){
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: notLargestOrSmallest(" + test1 + ")");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);
+		}
+		Part1[] actual2;
+		try {
+			++testNum;	
+			test1 = new ArrayList<>(Arrays.asList(
+					new Part1(20,10,12,13,14), new Part1(22,10,12,13,14),   
+					new Part1(19,10,12,13,14),new Part1(22,10,12,13,14),new Part1(20,12,12,13,14),new Part1(21,9,12,13,14),
+					new Part1(21,10,12,13,14),new Part1(22,10,12,13,14),new Part1(19,10,12,13,14),new Part1(21,6,12,13,14)));
+			actual2 = Part2.notLargestOrSmallest(test1); 
+			String expected = "[$20 10q 12d 13n 14p, $20 12q 12d 13n 14p, $21 9q 12d 13n 14p, "
+					+ "$21 10q 12d 13n 14p, $21 6q 12d 13n 14p]";
+			testEquality(expected, Arrays.toString(actual2), "TEST " + testNum + " notLargestOrSmallest(" + test1 + ")\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: notLargestOrSmallest(" + test1 + ")");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
+		try {
+			++testNum;	
+			test1 = new ArrayList<>(Arrays.asList(
+					new Part1(18,10,12,13,14), new Part1(21,10,12,13,14),   
+					new Part1(19,10,12,13,14),new Part1(22,10,12,13,14),new Part1(20,12,12,13,14),new Part1(21,9,12,13,14),
+					new Part1(21,10,12,13,14),new Part1(19,10,12,13,14),new Part1(20,8,12,13,14),new Part1(23,6,12,13,14)));
+			actual2 = Part2.notLargestOrSmallest(test1); 
+			String expected = "[$21 10q 12d 13n 14p, $19 10q 12d 13n 14p, $20 12q 12d 13n 14p, $21 9q 12d 13n 14p, "
+					+ "$21 10q 12d 13n 14p, $19 10q 12d 13n 14p, $20 8q 12d 13n 14p]";
+			testEquality(expected, Arrays.toString(actual2), "TEST " + testNum + " notLargestOrSmallest(" + test1 + ")\n");
+		} catch (Exception e) {
+			++numWrong;
+			out.println("TEST " + testNum + " FAILED: notLargestOrSmallest(" + test1 + ")");
+			out.println("ERROR MESSAGE SHOWN BELOW");
+			e.printStackTrace(out);			
+		}
 		out.println("--------------------");
-		out.println(numWrong + " tests 37-42 failed");
-		out.println("lost " + (numWrong*2.0/3) + " points");
-		grade = grade - numWrong*2.0/3;
-		out.println("Grade = " + grade);
-	}
-	public static void testQ1() {
-		out.println("*********TESTING QUESTION 1********\n");
-		try{ 
-			++testNum;
-			int[] test = null;
-			Questions1and2.max(test);
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: max(null) gave no Exception");
-		} catch(IllegalArgumentException e){
-			testEquality("Use non-empty arrays", e.getMessage(), "TEST " + testNum);
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: max(null)");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try{
-			++testNum;
-			int[] test = {};
-			Questions1and2.max(test);
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: max(empty) gave no Exception");
-		} catch(IllegalArgumentException e){
-			testEquality("Use non-empty arrays", e.getMessage(), "TEST " + (testNum));
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: max(empty)");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		int actual = 0;
-		try {
-			++testNum;
-			actual = Questions1and2.max(new int[] {2,1,4,1,2,4,3,4,3,2});
-			testEquality("4", "" + actual, "TEST " + (testNum));
-		} catch (Exception e) {
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: max(new int[] {2,1,4,1,2,4,3,4,3,2}");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);			
-		}
-		try {
-			++testNum;
-			actual = Questions1and2.max(new int[] {-2,-1,-4,-1,-2,-4,-3,-4,-3,-2});
-			testEquality("-1", "" + actual, "TEST " + (testNum));
-		} catch (Exception e) {
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: max(new int[] {-2,-1,-4,-1,-2,-4,-3,-4,-3,-2})");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);			
-		}
-		try{
-			++testNum;
-			int[] test = null;
-			Questions1and2.min(test);
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: min(null) gave no Exception");
-		} catch(IllegalArgumentException e){
-			testEquality("Use non-empty arrays", e.getMessage(), "TEST " + (testNum));
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: min(null)");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try{
-			++testNum;
-			int[] test = {};
-			Questions1and2.min(test);
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: min(empty) gave no Exception");
-		} catch(IllegalArgumentException e){
-			testEquality("Use non-empty arrays", e.getMessage(), "TEST " + (testNum));
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: min(empty)");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try {
-			++testNum;
-			actual = Questions1and2.min(new int[] {2,1,4,1,2,4,3,4,3,2});
-			testEquality("1", "" + actual, "TEST " + (testNum)); 
-		} catch (Exception e) {
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: min(new int[] {2,1,4,1,2,4,3,4,3,2})");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);			
-		}
-		try {
-			++testNum;
-			actual = Questions1and2.min(new int[] {-2,-1,-4,-1,-2,-4,-3,-4,-3,-2});
-			testEquality("-4", "" + actual, "TEST " + (testNum)); 
-		} catch (Exception e) {
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: min(new int[] {-2,-1,-4,-1,-2,-4,-3,-4,-3,-2})");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);			
-		}
-		try {
-			++testNum;
-			actual = Questions1and2.min(new int[] {0,2,1,4,1,2,0,4,3,4,3,2});
-			testEquality("0", "" + actual, "TEST " + (testNum)); 
-		} catch (Exception e) {
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: min(new int[] {0,2,1,4,1,2,0,4,3,4,3,2})");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);			
-		}
-		try{
-			++testNum;
-			int[] test = null;
-			Questions1and2.countMinMax(test);
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: countMinMax(null) gave no Exception");
-		} catch(IllegalArgumentException e){
-			testEquality("Use non-empty arrays", e.getMessage(), "TEST " + (testNum));
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: countMinMax(null)");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try{
-			++testNum;
-			int[] test = {};
-			Questions1and2.countMinMax(test);
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: countMinMax(empty) gave no Exception");
-		} catch(IllegalArgumentException e){
-			testEquality("Use non-empty arrays", e.getMessage(), "TEST " + (testNum));
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: countMinMax(empty)");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try {
-			++testNum;
-			actual = Questions1and2.countMinMax(new int[] {1,3,1,3,1,1,3,3});
-			testEquality("8", "" + actual, "TEST " + (testNum));
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: countMinMax(new int[] {1,3,1,3,1,1,3,3})");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try {
-			++testNum;
-			actual = Questions1and2.countMinMax(new int[] {-1,3,-1,3,4,1,4,3});
-			testEquality("4", "" + actual, "TEST " + (testNum));
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: countMinMax(new int[] {-1,3,-1,3,4,1,4,3})");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try {
-			++testNum;
-			actual = Questions1and2.countMinMax(new int[] {1,3,0,3,4,1,4,3});
-			testEquality("3", "" + actual, "TEST " + (testNum));
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: countMinMax(new int[] {1,3,0,3,4,1,4,3})");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		int[] actual1 = {10,10,10}; 
-		try {
-			++testNum;
-			actual1 = Questions1and2.allMinMax((int[])null);
-			testEquality("[]", Arrays.toString(actual1), "TEST " + (testNum));
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: allMinMax((int[])null)");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try {
-			++testNum;
-			actual1 = Questions1and2.allMinMax(new int[] {});
-			testEquality("[]", Arrays.toString(actual1), "TEST " + (testNum));
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: allMinMax(new int[] {})");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try {
-			++testNum;
-			actual1 = Questions1and2.allMinMax(new int[] {-1,3,-1,3,4,1,4,3});
-			testEquality("[-1, -1, 4, 4]", Arrays.toString(actual1), "TEST " + (testNum));
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: allMinMax(new int[] {-1,3,-1,3,4,1,4,3})");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		out.println("NOTE TEST " + testNum + " may fail because the arrays are in different orders");
-		try {
-			++testNum;
-			actual1 = Questions1and2.allMinMax(new int[] {1,3,1,3,1,1,3,3});
-			testEquality("[1, 3, 1, 3, 1, 1, 3, 3]", Arrays.toString(actual1), "TEST " + (testNum));
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: allMinMax(new int[] {1,3,1,3,1,1,3,3})");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		out.println("NOTE TEST " + testNum + " may fail because the arrays are in different orders");
+		out.println(numWrong + " tests failed of " + testNum);
+		out.println("lost " + (numWrong*10.0/testNum) + " points");
+		double grade = 10.0 - numWrong*10.0/testNum;
+		out.println("Grade = " + grade);		
 	}
 
-	public static void testQ2() {
-		out.println("*********TESTING QUESTION 2********\n");
-		try{ 
-			++testNum;
-			List<Integer> test = null;
-			Questions1and2.max(test);
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: max(null) gave no Exception");
-		} catch(IllegalArgumentException e){
-			testEquality("Use non-empty lists", e.getMessage(), "TEST " + testNum);
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: max(null)");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try{
-			++testNum;
-			List<Integer> test = List.of();
-			Questions1and2.max(test);
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: max(empty) gave no Exception");
-		} catch(IllegalArgumentException e){
-			testEquality("Use non-empty lists", e.getMessage(), "TEST " + testNum);
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: max(empty)");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		int actual = 0;
-		try {
-			++testNum;
-			actual = Questions1and2.max(List.of(2,1,4,1,2,4,3,4,3,2));
-			testEquality("4", "" + actual, "TEST " + testNum);
-		} catch (Exception e) {
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: max(List.of(2,1,4,1,2,4,3,4,3,2)");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);			
-		}
-		try {
-			++testNum;
-			actual = Questions1and2.max(List.of(-2,-1,-4,-1,-2,-4,-3,-4,-3,-2));
-			testEquality("-1", "" + actual, "TEST " + testNum);
-		} catch (Exception e) {
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: max(List.of(-2,-1,-4,-1,-2,-4,-3,-4,-3,-2))");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);			
-		}
-		try{
-			++testNum;
-			List<Integer> test = null;
-			Questions1and2.min(test);
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: min(null) gave no Exception");
-		} catch(IllegalArgumentException e){
-			testEquality("Use non-empty lists", e.getMessage(), "TEST " + testNum);
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: min(null)");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try{
-			++testNum;
-			List<Integer> test = List.of();
-			Questions1and2.min(test);
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: min(empty) gave no Exception");
-		} catch(IllegalArgumentException e){
-			testEquality("Use non-empty lists", e.getMessage(), "TEST " + testNum);
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: min(empty)");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try {
-			++testNum;
-			actual = Questions1and2.min(List.of(2,1,4,1,2,4,3,4,3,2));
-			testEquality("1", "" + actual, "TEST " + testNum); 
-		} catch (Exception e) {
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: min(List.of(2,1,4,1,2,4,3,4,3,2))");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);			
-		}
-		try {
-			++testNum;
-			actual = Questions1and2.min(List.of(-2,-1,-4,-1,-2,-4,-3,-4,-3,-2));
-			testEquality("-4", "" + actual, "TEST " + testNum); 
-		} catch (Exception e) {
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: min(List.of(-2,-1,-4,-1,-2,-4,-3,-4,-3,-2))");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);			
-		}
-		try {
-			++testNum;
-			actual = Questions1and2.min(List.of(0,2,1,4,1,2,0,4,3,4,3,2));
-			testEquality("0", "" + actual, "TEST " + testNum); 
-		} catch (Exception e) {
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: min(List.of(0,2,1,4,1,2,0,4,3,4,3,2))");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);			
-		}
-		try{
-			++testNum;
-			List<Integer> test = null;
-			Questions1and2.countMinMax(test);
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: countMinMax(null) gave no Exception");
-		} catch(IllegalArgumentException e){
-			testEquality("Use non-empty lists", e.getMessage(), "TEST " + testNum);
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: countMinMax(null)");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try{
-			++testNum;
-			List<Integer> test = List.of();
-			Questions1and2.countMinMax(test);
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: countMinMax(empty) gave no Exception");
-		} catch(IllegalArgumentException e){
-			testEquality("Use non-empty lists", e.getMessage(), "TEST " + testNum);
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: countMinMax(empty)");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try {
-			++testNum;
-			actual = Questions1and2.countMinMax(List.of(1,3,1,3,1,1,3,3));
-			testEquality("8", "" + actual, "TEST " + testNum);
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: countMinMax(List.of(1,3,1,3,1,1,3,3))");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try {
-			++testNum;
-			actual = Questions1and2.countMinMax(List.of(-1,3,-1,3,4,1,4,3));
-			testEquality("4", "" + actual, "TEST " + testNum);
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: countMinMax(List.of(-1,3,-1,3,4,1,4,3))");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try {
-			++testNum;
-			actual = Questions1and2.countMinMax(List.of(1,3,0,3,4,1,4,3));
-			testEquality("3", "" + actual, "TEST " + testNum);
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: countMinMax(List.of(1,3,0,3,4,1,4,3))");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		List<Integer> actual1 = List.of(10,10,10); 
-		try {
-			++testNum;
-			actual1 = Questions1and2.allMinMax((List<Integer>)null);
-			testEquality("[]", "" + actual1, "TEST " + testNum);
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: allMinMax((List<Integer>)null)");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try {
-			++testNum;
-			actual1 = Questions1and2.allMinMax(List.of());
-			testEquality("[]", "" + actual1, "TEST " + testNum);
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: allMinMax(List.of())");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try {
-			++testNum;
-			actual1 = Questions1and2.allMinMax(List.of(-1,3,-1,3,4,1,4,3));
-			testEquality("[-1, -1, 4, 4]", "" + actual1, "TEST " + testNum);
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: allMinMax(List.of(-1,3,-1,3,4,1,4,3))");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		out.println("NOTE TEST " + testNum + " may fail because the arrays are in different orders");
-		try {
-			++testNum;
-			actual1 = Questions1and2.allMinMax(List.of(1,3,1,3,1,1,3,3));
-			testEquality("[1, 3, 1, 3, 1, 1, 3, 3]", "" + actual1, "TEST " + testNum);
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: allMinMax(List.of(1,3,1,3,1,1,3,3))");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		out.println("NOTE TEST " + testNum + " may fail because the arrays are in different orders");
-	}
-
-	public static void testQ3() {
-		out.println("*********TESTING QUESTION 3********\n");
-		try {
-			++testNum;
-			testEquality("8m 700yds 2ft 7ins.", new USLinearMeasure(8,700,2,7).toString(), "TEST " + testNum);
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: new USLinearMeasure(8,700,2,7)");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try {
-			++testNum;
-			testEquality("254007", "" + new USLinearMeasure(4,15,2,3).convert(), "TEST " + testNum);
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: new USLinearMeasure(4,15,2,3).convert()");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try {
-			++testNum;
-			testEquality("3m 275yds 1ft 8ins.", USLinearMeasure.convert(200000).toString(), "TEST " + testNum);
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: USLinearMeasure.convert(200000)");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		USLinearMeasure test = null;
-		try {
-			++testNum;
-			test = new USLinearMeasure(10,16,1,10).add(new USLinearMeasure(8,7,0,7));
-
-			if("0m 0yds 0ft 0ins.".equals(test.toString())) {
-				out.println("TEST " + testNum + " FAILED: Got 0m 0yds 0ft 0ins.");
-				numWrong++;
-			} else testEquality(new USLinearMeasure(18,23,2,5), test, "TEST " + testNum);
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: USLinearMeasure.add");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try {
-			++testNum;
-			test = new USLinearMeasure(10,6,1,11).subtract(new USLinearMeasure(8,7,2,8));
-			if("0m 0yds 0ft 0ins.".equals(test.toString())) {
-				out.println("TEST " + testNum + " FAILED: Got 0m 0yds 0ft 0ins.");
-				numWrong++;
-			} else testEquality(new USLinearMeasure(1,1758,2,3), test, "TEST " + testNum);
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: USLinearMeasure.subtract");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-		try {
-			++testNum;
-			test = new USLinearMeasure(8,7,1,9).subtract(new USLinearMeasure(10,6,1,10));
-			if("0m 0yds 0ft 0ins.".equals(new USLinearMeasure(8,7,8,1).toString())) {
-				out.println("TEST " + testNum + " FAILED: See Test 37");
-				numWrong++;
-			} else testEquality(new USLinearMeasure(0,0,0,0), test, "TEST " + testNum);
-		} catch(Exception e){
-			++numWrong;
-			out.println("TEST " + testNum + " FAILED: USLinearMeasure.subtract--neg return");
-			out.println("ERROR MESSAGE SHOWN BELOW");
-			e.printStackTrace(out);
-		}
-	}
-
-	private static void testEquality(Object expected, Object actual, String testNum) {
-		if (!expected.toString().equals(actual.toString())) {
+	private static boolean testEquality(Object expected, Object actual, String testNum) {
+		if (!expected.toString().equalsIgnoreCase(actual.toString())) {
 			++numWrong;
 			out.printf(testNum + " FAILED: Expected '%s', received '%s'\n",
 					expected.toString(),
 					actual.toString());
+			return false;
 		} else {
-			out.printf(testNum + " Passed: '%s' == '%s'\n",
+			out.printf(testNum + " Passed: '%s' equalsIgnoreCase '%s'\n",
 					expected.toString(),
 					actual.toString());
+			return true;
 		}
 	}
 }

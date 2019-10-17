@@ -2,10 +2,11 @@ import os
 import csv
 
 #assignment_name = "Lab05"
-package_name = "lab05"
-tester_file_path = "/home/mllab/Desktop/CS140/Grading_Scripts/Testers/Labs/Lab05_Grader.java"
+submissions_folder_name = "Assignment01"
+package_name = "assignment01"
+tester_file_path = "/home/mllab/Desktop/CS140/Grading_Scripts/Testers/Assignments/Assignment01Tester.java"
 
-path_to_submissions = "/home/mllab/Desktop/CS140/Grading_Scripts/Lab05/"
+path_to_submissions = "/home/mllab/Desktop/CS140/Grading_Scripts/"+submissions_folder_name+"/"
 STUDENT_INFO_FILE = "studentGithubUsernames.csv"
 
 #Get just the tester name, without the .java extension
@@ -52,18 +53,28 @@ for student in student_folders:
 
 		#Get path to particular students code
 		path_to_code = path_to_submissions+student+'/'+package_name+'-'+id_to_github[student]+'/'
+		path_to_code = path_to_code + 'assignment01/' 
+		#print(path_to_code)
 
-		print(path_to_code)
+
 		#Copy tester file to students code
 		call1 = os.system("cp " + tester_file_path + ' ' + path_to_code)
 
 		if(call1 != 0):
 			f.write("Failed to copy over tester, this message should never appear!!\n")
 
+		#Add temp file to student directory (to grade number of junits passed)
+		call11 = os.system('touch temp.txt')
+		if(call11 != 0):
+			f.write("Failed to add temp.txt, this message should never appear!!\n")
+
+
 		#compile (including tester)
-		#javac -cp /usr/share/java/junit4.jar TestBasicLinkedList.java
-		#call2 = os.system("javac -cp .:/usr/share/java/junit4-4.12.jar -d . "+path_to_code+"*.java")		
-		call2 = os.system("javac -d . "+path_to_code+"*.java")
+		print("javac -cp /usr/share/java/junit4.jar -d . " +path_to_code+"*.java")
+		call2 = os.system("javac -cp /usr/share/java/junit4.jar -d . " +path_to_code+"*.java")
+
+		#non junit call
+		#call2 = os.system("javac -d . "+path_to_code+"*.java")
 
 		if(call2 != 0):
 			f.write("FAILED TO COMPILE. IGNORE GIVEN GRADE AND CHECK MANUALLY\n")
@@ -77,14 +88,42 @@ for student in student_folders:
 			#We don't need to point to students folder to run, as .class files
 			#are saved directly to Grading_Scripts/
 
-			#java -cp .:/usr/share/java/junit4-4.12.jar 
-			#call3 = os.system("java -cp .:/usr/share/java/junit4-4.12.jar "+package_name+'.'+tester_file_name)
-			call3 = os.system("java "+package_name+'.'+tester_file_name)
+			#junit call
+			print("java -cp /usr/share/java/junit4.jar:. org.junit.runner.JUnitCore "+package_name+'.'+tester_file_name)
+			call3 = os.system("java -cp /usr/share/java/junit4.jar:. org.junit.runner.JUnitCore "+package_name+'.'+tester_file_name)
 
+			#non junit call
+			#call3 = os.system("java "+package_name+'.'+tester_file_name)
+
+			#Call3 is always 256 running junits?
+			"""
 			if(call3 != 0):
 				f = open(path_to_submissions+"report.txt",'a')
 				f.write("RUNTIME ERROR!! Check manually unless the tester catches this\n")
 				f.close()
+			"""
+
+
+			#For junit, add number PASSED tokens in temp file with FAILED tokens for grade
+			f = open('temp.txt', 'r')
+			results = f.read().split(' ')
+			f.close()
+			num_passed = 0
+			num_failed = 0
+			#print(results)
+			for token in results:
+				#print(token)
+				if(token == "PASSED"):
+					num_passed += 1
+				if(token == "FAILED"):
+					num_failed += 1
+			f = open(path_to_submissions+"report.txt",'a')
+			f.write("Grade: " + str(num_passed/(num_passed+num_failed)) + '\n')
+			f.close()
+
+			call34 = os.system('rm temp.txt')
+			if(call34 != 0):
+				print("Failed to remove temp.txt")
 
 			#Now remove .class files to ensure next student is fresh compile
 			call4 = os.system("rm -r " + package_name + '/')
