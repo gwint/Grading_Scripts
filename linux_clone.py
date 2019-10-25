@@ -5,7 +5,7 @@ import csv
 from argparse import ArgumentParser
 from html.parser import HTMLParser
 
-COMMIT_HASHS_DIR = "/home/mllab/Desktop/CS140/lab05" ## maps student name to commit hash
+COMMIT_HASHS_DIR = "/home/mllab/Desktop/CS140/assignment1" ## maps student name to commit hash
                                 ## (only of people who submitted)
 STUDENT_INFO_FILE = "studentGithubUsernames.csv"
 NAME_IDX = 0
@@ -115,6 +115,7 @@ def main():
   error = []
 
   for student_name in students_of_interest:
+    #print(name_to_info_mapping)
     bID = name_to_info_mapping[student_name][0]
     gitusername = name_to_info_mapping[student_name][1]
     if(name_to_info_mapping[student_name][1] != "NA"):

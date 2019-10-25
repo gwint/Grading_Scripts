@@ -16,28 +16,37 @@ repositories for assignment <\assignment name> will be cloned into it.
 The particular commit checked out for each cloned repository will depend on
 the commit hash submitted to MyCourses by the student.
 
+## runTester.py - Automated JUnit testing for each student
 
-Steps to grade an assignment:
-
-1. Clone ALL assignments into some folder labXX (XX should be lab or assignment number)
+1. Clone ALL assignments into some folder XXXX
 
 2. Write rubric, add in rubrics/assignments or rubrics/labs folder
 
 3. Write tester, add in Testers/Assignments or Testers/Labs folder.
-	
-	- In your tester, make sure to append errors and final grade 
-	of student to ../Grading_Scripts/folder_name/report.txt
-	- See Grading_Scripts/Testers/Labs/Lab01_Grader.java for an example
+
+	- See Testers/Assignments/Assignment01Tester.java for an example. Note that
+	for each student we are making a temp file, and appending PASSED or FAILED for
+	each test.
 
 4. Change the following in runTester.py:
 
-	- assignment_name must be labXX
+	- submissions_folder_name must be XXXX
 	- package_name must be name of package that students wrote code in
 	- tester_file_path must be path where tester is located
 
-5. Add report.txt in labXX folder
+	Note that runTester.py will add the tester file to each students code directory,
+	compile and run JUnit. You might need to modify the compile and run commands if you
+	are compiling and running JUnit differently.
 
-6. Run python3 runTester.py. Results for each student, along with your tester error messages will appear in report.txt, located in labXX
+	runTester.py is then counting the number of PASSED and FAILED tokens in temp.txt to determine the students grade.
+
+5. Add report.txt in XXXX folder (parellel to students directories)
+
+6. Run python3 runTester.py. Results for each student, will be in report.txt.
+For students whose code didn't compile, we need to manually compile their code 
+(at least the tester is already copied over). Also note that files never copy over
+to Cat Tran's folder, due to permission issues.
+
 
 
 ## Running a junit tester via the command line

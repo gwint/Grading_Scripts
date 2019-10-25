@@ -1,21 +1,50 @@
 package assignment01;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
+import org.junit.Test;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.rules.TestWatcher;
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
+import java.io.FileWriter;
 
 public class Assignment01Tester {
+	
+	FileWriter fw;	
+
+
+	@Rule
+	public TestWatcher watchman= new TestWatcher() {
+
+		@Override
+		protected void failed(Throwable e, Description description) {
+			try{ 
+    			fw.write("FAILED ");// Write FAILED token to file for each failed test
+    			fw.close();
+    		}catch(Exception ex){}
+  		}
+
+		@Override
+		protected void succeeded(Description description) {
+			try{ 
+    			fw.write("PASSED ");// Write PASSED token to file for each successful test
+    			fw.close();
+    		}catch(Exception ex){}
+		}
+	};
+
+
 	Computer[] computers = new Computer[5];
 	StreetUSAddress[] streets = new StreetUSAddress[5];
 	DateAndPlaceOfBirth[] dateplaces = new DateAndPlaceOfBirth[8];
 	Person[] persons = new Person[5];
 	
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
+
+		fw = new FileWriter("temp.txt", true); //write a token in temp file	
+
 		computers[0] = new Computer("Dell", "Intel Core i5", 16, 500, true, 800.99);
 		computers[1] = new Computer("Dell", "Intel Core i7", 8, 1500, false, 1100.99);
 		computers[2] = new Computer("Dell", "Intel Core i5", 24, 500, true, 800.99);
@@ -42,35 +71,33 @@ public class Assignment01Tester {
 	}
 
 	@Test
-	void testGetAddressLine1() {
+	public void testGetAddressLine1() {
 		assertEquals("80 State St", streets[1].getAddressLine1());
 	}
 
 	@Test
-	void testGetAddressLine2() {
-		assertAll (
-				() -> assertEquals("", streets[1].getAddressLine2().trim()),
-				() -> assertEquals("Appt 15A", streets[0].getAddressLine2().trim())
-				);
+	public void testGetAddressLine2() {
+		assertEquals("", streets[1].getAddressLine2().trim());
+		assertEquals("Appt 15A", streets[0].getAddressLine2().trim());
 	}
 
 	@Test
-	void testGetCity() {
+	public void testGetCity() {
 		assertEquals("Vestal", streets[2].getCity());
 	}
 
 	@Test
-	void testGetStateAbbreviation() {
+	public void testGetStateAbbreviation() {
 		assertEquals("NY", streets[3].getStateAbbreviation());
 	}
 
 	@Test
-	void testGetZipCode() {
+	public void testGetZipCode() {
 		assertEquals("13827", streets[4].getZipCode());
 	}
 
 	@Test
-	void testHasSameBirthDayAs() {
+	public void testHasSameBirthDayAs() {
 		assertTrue(dateplaces[2].hasSameBirthDayAs(dateplaces[5]));
 		assertTrue(dateplaces[5].hasSameBirthDayAs(dateplaces[6]));
 		assertTrue(dateplaces[6].hasSameBirthDayAs(dateplaces[7]));
@@ -90,17 +117,17 @@ public class Assignment01Tester {
 	}
 	
 	@Test
-	void testGetPlaceDob() {
+	public void testGetPlaceDob() {
 		assertEquals(dateplaces[0], persons[0].getPlaceDob());
 	}
 
 	@Test
-	void testGetAddress() {
+	public void testGetAddress() {
 		assertEquals(streets[0], persons[0].getAddress());
 	}
 
-	@Test
-	void testToStringPerson() {
+	/*@Test
+	public void testToStringPerson() {
 		System.out.println("Expected persons[0] toString:");
 		System.out.println("John Smith (999-99-9999),\n"
 				+ "Date and place of birth: 1990-10-21, Binghamton, NY, USA\n"
@@ -109,7 +136,6 @@ public class Assignment01Tester {
 		System.out.println("Actual:");
 		System.out.println(persons[0]);
 		System.out.println();
-		String[] parts1 = persons[0].toString().trim().split("\n");
 		System.out.println("Expected persons[4] toString:");
 		System.out.println("Steven Walker (001-02-0003),\n"
 				+ "Date and place of birth: 2006-06-10, Moscow, Russia\n"
@@ -118,31 +144,41 @@ public class Assignment01Tester {
 		System.out.println("Actual:");
 		System.out.println(persons[4]);
 		System.out.println();
+		String[] parts1 = persons[0].toString().trim().split("\n");
 		String[] parts2 = persons[4].toString().trim().split("\n");
-	
-		assertAll (
-				() -> assertEquals("John Smith (999-99-9999),", parts1[0].trim()),
-				() -> assertEquals("Date and place of birth: 1990-10-21, Binghamton, NY, USA", parts1[1].trim()),
-				() -> assertEquals("800 Main St", parts1[2].trim()),
-				() -> assertEquals("Appt 15A", parts1[3].trim()),
-				() -> assertEquals("Binghamton, NY 13905", parts1[4].trim()),
-				() -> assertEquals("Steven Walker (001-02-0003),", parts2[0].trim()),
-				() -> assertEquals("Date and place of birth: 2006-06-10, Moscow, Russia", parts2[1].trim()),
-				() -> assertEquals("80 Front St", parts2[2].trim()),
-				() -> assertEquals("Owego, NY 13827", parts2[3].trim())
-				);
+
+
+		assertEquals("John Smith (999-99-9999),", parts1[0].trim());
+		assertEquals("Date and place of birth: 1990-10-21, Binghamton, NY, USA", parts1[1].trim());
+		assertEquals("800 Main St", parts1[2].trim());
+		assertEquals("Appt 15A", parts1[3].trim());
+		assertEquals("Binghamton, NY 13905", parts1[4].trim());
+		assertEquals("Steven Walker (001-02-0003),", parts2[0].trim());
+		assertEquals("Date and place of birth: 2006-06-10, Moscow, Russia", parts2[1].trim());
+		assertEquals("80 Front St", parts2[2].trim());
+		assertEquals("Owego, NY 13827", parts2[3].trim());
+	}*/
+
+	@Test
+	public void testSimpleDateBefore1() {
+		assertTrue(SimpleDate.of(2000, 10, 20).before(SimpleDate.of(2001, 5, 3)));
+		assertFalse(SimpleDate.of(2010, 10, 20).before(SimpleDate.of(2000, 11, 23)));
+	}
+	@Test
+	public void testSimpleDateBefore2() {
+		assertTrue(SimpleDate.of(2000, 10, 20).before(SimpleDate.of(2000, 11, 3)));
+		assertFalse(SimpleDate.of(2000, 11, 20).before(SimpleDate.of(2000, 10, 33)));
+	}
+	@Test
+	public void testSimpleDateBefore3() {
+		assertTrue(SimpleDate.of(2000, 10, 20).before(SimpleDate.of(2000, 10, 23)));
+		assertFalse(SimpleDate.of(2000, 10, 23).before(SimpleDate.of(2000, 10, 20)));
 	}
 
 	@Test
-	void testSimpleDateBefore() {
-		assertAll (
-				() -> assertTrue(SimpleDate.of(2000, 10, 20).before(SimpleDate.of(2001, 5, 3))),
-				() -> assertTrue(SimpleDate.of(2000, 10, 20).before(SimpleDate.of(2000, 11, 3))),
-				() -> assertTrue(SimpleDate.of(2000, 10, 20).before(SimpleDate.of(2000, 10, 23))),
-				() -> assertFalse(SimpleDate.of(2000, 10, 20).before(SimpleDate.of(2000, 10, 20))),
-				() -> assertFalse(SimpleDate.of(2010, 10, 20).before(SimpleDate.of(2000, 11, 23))),
-				() -> assertFalse(SimpleDate.of(2000, 11, 20).before(SimpleDate.of(2000, 10, 33))),
-				() -> assertFalse(SimpleDate.of(2000, 10, 23).before(SimpleDate.of(2000, 10, 20)))
-				);
+	public void testSimpleDateBefore4() {
+		assertFalse(SimpleDate.of(2000, 10, 20).before(SimpleDate.of(2000, 10, 20)));
 	}
+
+
 }
