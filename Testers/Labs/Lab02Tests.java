@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.io.IOException;
 import java.io.FileWriter;
 
-class Lab02_Grader {
+class Lab02Tests {
 
 	public static void main(String[] args) throws IOException{
  

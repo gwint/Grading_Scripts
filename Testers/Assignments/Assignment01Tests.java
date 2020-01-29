@@ -9,7 +9,7 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import java.io.FileWriter;
 
-public class Assignment01Tester {
+public class Assignment01Tests {
 	
 	FileWriter fw;	
 

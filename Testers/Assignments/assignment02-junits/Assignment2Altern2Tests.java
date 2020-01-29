@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class Assignment2TesterAltern2 {
+class Assignment2Altern2Tests {
 	final double INITIAL_BALANCE2 = 10000;
 	final double RATE2 = 5;
 	Investment2 invest2;
@@ -106,9 +106,7 @@ class Assignment2TesterAltern2 {
 				);		
 		port.addInvestment(2, 3, invest3a);
 		assertAll (
-				() -> assertEquals(2, invest3.getYears()),
 				() -> assertEquals(11025.00, invest3.getBalance(),1e-2),
-				() -> assertEquals(0, invest3a.getYears()),
 				() -> assertEquals(INITIAL_BALANCE3+100, invest3a.getBalance(),1e-2)
 				);		
 		Throwable exception = assertThrows(IllegalArgumentException.class,
@@ -128,11 +126,8 @@ class Assignment2TesterAltern2 {
 		assertEquals("insufficient funds", exception.getMessage());
 		port.addInvestment(3, 4, invest3b);
 		assertAll (
-				() -> assertEquals(5, invest3.getYears()),
 				() -> assertEquals(12641.27, invest3.getBalance(),1e-2),
-				() -> assertEquals(3, invest3a.getYears()),
 				() -> assertEquals(11361.13, invest3a.getBalance(),1e-2),
-				() -> assertEquals(0, invest3b.getYears()),
 				() -> assertEquals(INITIAL_BALANCE3-200, invest3b.getBalance(),1e-2)
 				);
 	}
@@ -171,19 +166,19 @@ class Assignment2TesterAltern2 {
 	}
 
 	@Test
-	void testIndexOfFirstInvestamentToBalance() {
+	void testIndexOfFirstInvestmentToBalance() {
 		port.addInvestment(0, 2, invest3); 
 		port.addInvestment(2, 3, invest3a);
 		port.addInvestment(3, 4, invest3b);
-		assertEquals(2, port.indexOfFirstInvestamentToBalance(50000));
+		assertEquals(2, port.indexOfFirstInvestmentToBalance(50000));
 	}
 
 	@Test
-	void testIndexOfFirstInvestamentToBalance2() {
+	void testIndexOfFirstInvestmentToBalance2() {
 		port.addInvestment(0, 2, invest3); 
 		port.addInvestment(0, 3, invest3a);
 		port.addInvestment(0, 4, invest3b);
-		assertEquals(4, port.indexOfFirstInvestamentToBalance(20800));
+		assertEquals(4, port.indexOfFirstInvestmentToBalance(20800));
 	}
 
 	@Test
