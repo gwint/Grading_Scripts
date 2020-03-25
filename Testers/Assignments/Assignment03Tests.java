@@ -1,278 +1,235 @@
 package assignment03;
 
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.*;
+import wrapper.Instance;
+import wrapper.ClassWrapper;
+import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-class Assignment3Tests {
-    ClassRoom classroom;
+public class Assignment03Tests {
 
-	@BeforeEach
-	void setUp() throws Exception {
-        this.classroom = new ClassRoom();
-        Student a = new Student(5, "Gina");
-        Student b = new Student(4, "Tyler");
-        Student c = new Student(3, "Arnold");
-        Student d = new Student(2, "Jessica");
-        Student e = new Student(1, "Richard");
+    @Test
+    public void testAppendArray() throws Exception {
+        ClassWrapper assignment03Wrapper =
+                         new ClassWrapper("assignment03.Assignment03");
+        List<Integer> lst = new ArrayList<>(Arrays.asList(1,2,3,4));
+        int[] arr = new int[]{5,6};
 
-        this.classroom.addStudent(a);
-        this.classroom.addStudent(b);
-        this.classroom.addStudent(c);
-        this.classroom.addStudent(d);
-        this.classroom.addStudent(e);
-	}
+        Object[] args = assignment03Wrapper.executeMethod("appendArray", lst, arr);
 
-	@Test
-	void testSortById1() {
-        List<Student> students = new ArrayList<>(
-            Arrays.asList(
-                new Student(4, "first"),
-                new Student(1, "second"),
-                new Student(3, "third"),
-                new Student(2, "forth")
-            )
-        );
-
-        ClassRoom.sortById(students);
-
-        assertAll (
-            () -> assertEquals("second", students.get(0).getName()),
-            () -> assertEquals("forth", students.get(1).getName()),
-            () -> assertEquals("third", students.get(2).getName()),
-            () -> assertEquals("first", students.get(3).getName())
-        );
-	}
-
-	@Test
-	void testSortById2() {
-        List<Student> students = new ArrayList<>(
-            Arrays.asList(
-                new Student(1, "first"),
-                new Student(2, "second"),
-                new Student(3, "third"),
-                new Student(4, "forth")
-            )
-        );
-
-        ClassRoom.sortById(students);
-
-        assertAll (
-            () -> assertEquals("first", students.get(0).getName()),
-            () -> assertEquals("second", students.get(1).getName()),
-            () -> assertEquals("third", students.get(2).getName()),
-            () -> assertEquals("forth", students.get(3).getName())
-        );
-	}
-
-	@Test
-	void testIsRegistered1() {
-        assertTrue(this.classroom.isRegistered(1));
-	}
-
-	@Test
-	void testIsRegistered2() {
-        assertFalse(this.classroom.isRegistered(-1));
-	}
-
-    private static boolean contains(List<Student> studentList, Student student) {
-        for(Student stud : studentList) {
-            if(stud.getId() == student.getId())
-                return true;
-        }
-
-        return false;
+        Assert.assertEquals(args[0], new ArrayList<Integer>(Arrays.asList(1,2,3,4,5,6)));
     }
 
-	@Test
-	void testRegisteredInAll1() {
-        Student a = new Student(5, "Gina");
-        Student b = new Student(4, "Tyler");
-        Student c = new Student(3, "Arnold");
-        Student d = new Student(2, "Jessica");
-        Student e = new Student(1, "Richard");
+    @Test(expected = InvocationTargetException.class)
+    public void testAppendArrayNull() throws Exception {
+        ClassWrapper assignment03Wrapper =
+                         new ClassWrapper("assignment03.Assignment03");
+        List<Integer> lst = new ArrayList<>(Arrays.asList(1,2,3,4));
+        Object[] args = assignment03Wrapper.executeMethod("appendArray", lst, null);
+    }
 
-        ClassRoom classroom1 = new ClassRoom();
-        classroom1.addStudent(a);
-        classroom1.addStudent(b);
-        classroom1.addStudent(c);
-        classroom1.addStudent(d);
-        classroom1.addStudent(e);
+    @Test
+    public void testSumElementWise() throws Exception {
+        ClassWrapper assignment03Wrapper =
+                         new ClassWrapper("assignment03.Assignment03");
+        List<Integer> lst1 = new ArrayList<>(Arrays.asList(1,2,3,4,5));
+        List<Integer> lst2 = new ArrayList<>(Arrays.asList(-1,-2,-3,-4,-5));
 
-        ClassRoom classroom2 = new ClassRoom();
-        classroom2.addStudent(a);
-        classroom2.addStudent(b);
-        classroom2.addStudent(c);
+        List<Integer> allZeroes = assignment03Wrapper.executeMethod("sumElementWise", lst1, lst2);
 
-        ClassRoom classroom3 = new ClassRoom();
-        classroom3.addStudent(b);
-        classroom3.addStudent(c);
+        Assert.assertEquals(new ArrayList<Integer>(Arrays.asList(0,0,0,0,0)), allZeroes);
+    }
 
-        List<Student> containedInAll =
-             ClassRoom.registeredInAll(classroom1, classroom2, classroom3);
+    @Test(expected = InvocationTargetException.class)
+    public void testSumElementWiseNull() throws Exception {
+        ClassWrapper assignment03Wrapper =
+                         new ClassWrapper("assignment03.Assignment03");
+        List<Integer> lst1 = new ArrayList<>(Arrays.asList(1,2,3,4,5));
+        List<Integer> lst2 = null;
 
-        assertAll (
-            () -> assertTrue(Assignment3Tests.contains(containedInAll, b)),
-            () -> assertTrue(Assignment3Tests.contains(containedInAll, c)),
-            () -> assertTrue(containedInAll.size() == 2)
-        );
-	}
+        List<Integer> allZeroes = assignment03Wrapper.executeMethod("sumElementWise", lst1, lst2);
+    }
 
-	@Test
-	void testRegisteredInAll2() {
-        Student a = new Student(5, "Gina");
-        Student b = new Student(4, "Tyler");
-        Student c = new Student(3, "Arnold");
-        Student d = new Student(2, "Jessica");
-        Student e = new Student(1, "Richard");
+    @Test
+    public void testGetClassRoster() throws Exception {
+        ClassWrapper personWrapper = new ClassWrapper("assignment03.Person");
+        ClassWrapper studentWrapper = new ClassWrapper("assignment03.Student");
+        ClassWrapper rosterWrapper = new ClassWrapper("assignment03.Roster");
 
-        ClassRoom classroom1 = new ClassRoom();
-        classroom1.addStudent(a);
-        classroom1.addStudent(b);
+        Instance personInstance = personWrapper.getInstance("last", "first", 1,1,1);
+        Instance studentInstance = studentWrapper.getInstance(personInstance, "comp sci", 4.0, "B001234");
+        Instance rosterInstance = rosterWrapper.getInstance();
 
-        ClassRoom classroom2 = new ClassRoom();
-        classroom2.addStudent(c);
-        classroom2.addStudent(d);
+        List<Object> roster = rosterInstance.executeMethod("getClassRoster");
 
-        ClassRoom classroom3 = new ClassRoom();
-        classroom3.addStudent(e);
+        Assert.assertTrue(roster.size() == 0);
+    }
 
-        List<Student> containedInAll =
-             ClassRoom.registeredInAll(classroom1, classroom2, classroom3);
+    @Test
+    public void testAddStudent() throws Exception {
+        ClassWrapper personWrapper = new ClassWrapper("assignment03.Person");
+        ClassWrapper studentWrapper = new ClassWrapper("assignment03.Student");
+        ClassWrapper rosterWrapper = new ClassWrapper("assignment03.Roster");
 
-        assertTrue(containedInAll.size() == 0);
-	}
+        Instance personInstance = personWrapper.getInstance("last", "first", 1,1,1);
+        Instance studentInstance = studentWrapper.getInstance(personInstance, "comp sci", 4.0, "B001234");
+        Instance rosterInstance = rosterWrapper.getInstance();
 
-	@Test
-	void testAlsoRegisteredIn1() {
-        Student a = new Student(5, "Gina");
-        Student b = new Student(4, "Tyler");
-        Student c = new Student(3, "Arnold");
-        Student d = new Student(2, "Jessica");
-        Student e = new Student(1, "Richard");
+        List<Object> rosterBefore =
+                             rosterInstance.getDataMember("classRoster");
+        Assert.assertTrue(rosterBefore.size() == 0);
 
-        ClassRoom classroom1 = new ClassRoom();
-        classroom1.addStudent(a);
-        classroom1.addStudent(b);
+        rosterInstance.executeMethod("addStudent", studentInstance);
 
-        ClassRoom classroom2 = new ClassRoom();
-        classroom2.addStudent(c);
-        classroom2.addStudent(d);
+        List<Object> rosterAfter =
+                             rosterInstance.getDataMember("classRoster");
 
-        ClassRoom classroom3 = new ClassRoom();
-        classroom3.addStudent(e);
+        Assert.assertTrue(rosterAfter.size() == 1);
+    }
 
-        List<Student> containedInAll =
-             classroom1.alsoRegisteredIn(classroom2, classroom3);
+    @Test
+    public void testDropStudent() throws Exception {
+        ClassWrapper personWrapper = new ClassWrapper("assignment03.Person");
+        ClassWrapper studentWrapper = new ClassWrapper("assignment03.Student");
+        ClassWrapper rosterWrapper = new ClassWrapper("assignment03.Roster");
 
-        assertTrue(containedInAll.size() == 0);
-	}
+        Instance personInstance = personWrapper.getInstance("last", "first", 1,1,1);
+        Instance studentInstance =
+         studentWrapper.getInstance(personInstance, "comp sci", 4.0, "B001234");
+        Instance rosterInstance = rosterWrapper.getInstance();
 
-	@Test
-	void testAlsoRegisteredIn2() {
-        Student a = new Student(5, "Gina");
-        Student b = new Student(4, "Tyler");
-        Student c = new Student(3, "Arnold");
-        Student d = new Student(2, "Jessica");
-        Student e = new Student(1, "Richard");
+        List<Object> rosterBefore =
+                             rosterInstance.getDataMember("classRoster");
+        Assert.assertTrue(rosterBefore.size() == 0);
 
-        ClassRoom classroom1 = new ClassRoom();
-        classroom1.addStudent(a);
-        classroom1.addStudent(b);
-        classroom1.addStudent(c);
-        classroom1.addStudent(d);
-        classroom1.addStudent(e);
+        rosterInstance.executeMethod("addStudent", studentInstance);
 
-        ClassRoom classroom2 = new ClassRoom();
-        classroom2.addStudent(a);
-        classroom2.addStudent(b);
-        classroom2.addStudent(c);
+        List<Object> rosterAfter =
+                             rosterInstance.getDataMember("classRoster");
 
-        ClassRoom classroom3 = new ClassRoom();
-        classroom3.addStudent(b);
-        classroom3.addStudent(c);
+        Assert.assertTrue(rosterAfter.size() == 1);
 
-        List<Student> containedInAll =
-             classroom1.alsoRegisteredIn(classroom2, classroom3);
+        rosterInstance.executeMethod("dropStudent", "B0012345");
 
-        System.out.println(containedInAll.size());
-        for(Student stud : containedInAll) {
-            System.out.println(stud.getName());
-        }
-        assertTrue(containedInAll.size() == 2);
-        assertAll (
-            () -> assertTrue(Assignment3Tests.contains(containedInAll, b)),
-            () -> assertTrue(Assignment3Tests.contains(containedInAll, c)),
-            () -> assertTrue(containedInAll.size() == 2)
-        );
-	}
+        rosterAfter = rosterInstance.getDataMember("classRoster");
 
-	@Test
-	void testRegisteredInOne1() {
-        Student a = new Student(5, "Gina");
-        Student b = new Student(4, "Tyler");
-        Student c = new Student(3, "Arnold");
-        Student d = new Student(2, "Jessica");
-        Student e = new Student(1, "Richard");
+        Assert.assertTrue(rosterAfter.size() == 1);
 
-        ClassRoom classroom1 = new ClassRoom();
+        rosterInstance.executeMethod("dropStudent", "B001234");
 
-        classroom1.addStudent(a);
-        classroom1.addStudent(b);
+        rosterAfter = rosterInstance.getDataMember("classRoster");
 
-        ClassRoom classroom2 = new ClassRoom();
-        classroom2.addStudent(c);
-        classroom2.addStudent(d);
+        Assert.assertTrue(rosterAfter.size() == 0);
+    }
 
-        ClassRoom classroom3 = new ClassRoom();
-        classroom3.addStudent(e);
+    @Test
+    public void testDropStudent1() throws Exception {
+        ClassWrapper personWrapper = new ClassWrapper("assignment03.Person");
+        ClassWrapper studentWrapper = new ClassWrapper("assignment03.Student");
+        ClassWrapper rosterWrapper = new ClassWrapper("assignment03.Roster");
 
-        List<Student> containedInAny =
-             ClassRoom.registeredInOne(classroom1, classroom2, classroom3);
+        Instance personInstance = personWrapper.getInstance("last", "first", 1,1,1);
+        Instance studentInstance =
+         studentWrapper.getInstance(personInstance, "comp sci", 4.0, "B001234");
+        Instance rosterInstance = rosterWrapper.getInstance();
 
-        assertAll (
-            () -> assertTrue(containedInAny.get(4).getName() == "Gina"),
-            () -> assertTrue(containedInAny.get(3).getName() == "Tyler"),
-            () -> assertTrue(containedInAny.get(2).getName() == "Arnold"),
-            () -> assertTrue(containedInAny.get(1).getName() == "Jessica"),
-            () -> assertTrue(containedInAny.get(0).getName() == "Richard"),
-            () -> assertTrue(containedInAny.size() == 5)
-        );
-	}
+        List<Object> rosterBefore =
+                             rosterInstance.getDataMember("classRoster");
+        Assert.assertTrue(rosterBefore.size() == 0);
 
-	@Test
-	void testRegisteredInOne2() {
-        Student a = new Student(5, "Gina");
-        Student b = new Student(4, "Tyler");
-        Student c = new Student(3, "Arnold");
-        Student d = new Student(2, "Jessica");
-        Student e = new Student(1, "Richard");
+        rosterInstance.executeMethod("addStudent", studentInstance);
 
-        ClassRoom classroom1 = new ClassRoom();
-        classroom1.addStudent(a);
-        classroom1.addStudent(b);
-        classroom1.addStudent(c);
+        List<Object> rosterAfter =
+                             rosterInstance.getDataMember("classRoster");
 
-        ClassRoom classroom2 = new ClassRoom();
-        classroom2.addStudent(c);
-        classroom2.addStudent(d);
+        Assert.assertTrue(rosterAfter.size() == 1);
 
-        ClassRoom classroom3 = new ClassRoom();
-        classroom3.addStudent(d);
-        classroom3.addStudent(e);
+        rosterInstance.executeMethod("dropStudent", "B0012345");
 
-        List<Student> containedInAny =
-             ClassRoom.registeredInOne(classroom1, classroom2, classroom3);
+        rosterAfter = rosterInstance.getDataMember("classRoster");
 
-        assertAll (
-            () -> assertTrue(containedInAny.get(4).getName() == "Gina"),
-            () -> assertTrue(containedInAny.get(3).getName() == "Tyler"),
-            () -> assertTrue(containedInAny.get(2).getName() == "Arnold"),
-            () -> assertTrue(containedInAny.get(1).getName() == "Jessica"),
-            () -> assertTrue(containedInAny.get(0).getName() == "Richard"),
-            () -> assertTrue(containedInAny.size() == 5)
-        );
-	}
+        Assert.assertTrue(rosterAfter.size() == 1);
+
+        rosterInstance.executeMethod("dropStudent", "B001234");
+
+        rosterAfter = rosterInstance.getDataMember("classRoster");
+
+        Assert.assertTrue(rosterAfter.size() == 0);
+    }
+
+    @Test
+    public void testDropStudent2() throws Exception {
+        ClassWrapper personWrapper = new ClassWrapper("assignment03.Person");
+        ClassWrapper studentWrapper = new ClassWrapper("assignment03.Student");
+        ClassWrapper rosterWrapper = new ClassWrapper("assignment03.Roster");
+
+        Instance personInstance = personWrapper.getInstance("last", "first", 1,1,1);
+        Instance studentInstance =
+         studentWrapper.getInstance(personInstance, "comp sci", 4.0, "B001234");
+        Instance rosterInstance = rosterWrapper.getInstance();
+
+        List<Object> rosterBefore =
+                             rosterInstance.getDataMember("classRoster");
+        Assert.assertTrue(rosterBefore.size() == 0);
+
+        rosterInstance.executeMethod("addStudent", studentInstance);
+
+        List<Object> rosterAfter =
+                             rosterInstance.getDataMember("classRoster");
+
+        Assert.assertTrue(rosterAfter.size() == 1);
+
+        rosterInstance.executeMethod("dropStudent", "B0012345");
+
+        rosterAfter = rosterInstance.getDataMember("classRoster");
+
+        Assert.assertTrue(rosterAfter.size() == 1);
+
+        rosterInstance.executeMethod("dropStudent", "B001234");
+
+        rosterAfter = rosterInstance.getDataMember("classRoster");
+
+        Assert.assertTrue(rosterAfter.size() == 0);
+    }
+
+    @Test
+    public void testSortByBNum() throws Exception {
+        ClassWrapper personWrapper = new ClassWrapper("assignment03.Person");
+        ClassWrapper studentWrapper = new ClassWrapper("assignment03.Student");
+        ClassWrapper rosterWrapper = new ClassWrapper("assignment03.Roster");
+
+        Instance personInstance = personWrapper.getInstance("last", "first", 1,1,1);
+        Instance studentInstance = studentWrapper.getInstance(personInstance, "comp sci", 4.0, "B001234");
+        Instance studentInstance1 = studentWrapper.getInstance(personInstance, "comp sci", 1.3, "B001236");
+        Instance studentInstance2 = studentWrapper.getInstance(personInstance, "comp sci", 1.3, "B001230");
+        Instance studentInstance3 = studentWrapper.getInstance(personInstance, "comp sci", 1.3, "B001229");
+
+        Instance rosterInstance = rosterWrapper.getInstance();
+
+        List<Object> rosterBefore =
+                             rosterInstance.getDataMember("classRoster");
+        Assert.assertTrue(rosterBefore.size() == 0);
+
+        rosterInstance.executeMethod("addStudent", studentInstance);
+        rosterInstance.executeMethod("addStudent", studentInstance1);
+        rosterInstance.executeMethod("addStudent", studentInstance2);
+        rosterInstance.executeMethod("addStudent", studentInstance3);
+
+        List<Object> rosterAfter =
+                             rosterInstance.getDataMember("classRoster");
+
+        Assert.assertTrue(rosterAfter.size() == 4);
+
+        rosterInstance.executeMethod("sortByBNum");
+
+        rosterAfter = rosterInstance.getDataMember("classRoster");
+
+        Assert.assertEquals(studentInstance3.getObj(), rosterAfter.get(0));
+        Assert.assertEquals(studentInstance2.getObj(), rosterAfter.get(1));
+        Assert.assertEquals(studentInstance.getObj(), rosterAfter.get(2));
+        Assert.assertEquals(studentInstance1.getObj(), rosterAfter.get(3));
+    }
 }

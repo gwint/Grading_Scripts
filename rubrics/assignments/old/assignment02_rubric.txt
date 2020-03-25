@@ -1,7 +1,0 @@
-2 pts - OneChange class
-1 pt - OneChangeTester class
-2 pts - WeirdSorter class
-1 pt - WeirdSorterTester class
-1 pt - OneChangeBook class
-1 pt - WeirdSorterBook class
-2 pt - BookTester class

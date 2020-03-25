@@ -1,0 +1,186 @@
+#!/usr/bin/python3
+
+import os
+import sys
+import subprocess
+import csv
+from argparse import ArgumentParser
+from html.parser import HTMLParser
+from dotenv import load_dotenv
+
+load_dotenv()
+
+COMMIT_HASHS_DIR = os.getenv("COMMIT_HASHES_FOLDER_PATH")
+STUDENT_INFO_FILE = "studentGithubUsernames.csv"
+NAME_IDX = 0
+HASH_IDX = 6
+COMMENT_IDX = 9
+NO_ENTRY_MESSAGE = \
+        "There is no student submission text data for this assignment."
+A51_ROSTER = os.getenv("A51_ROSTER_FILE")
+A52_ROSTER = os.getenv("A52_ROSTER_FILE")
+A53_ROSTER = os.getenv("A53_ROSTER_FILE")
+A54_ROSTER = os.getenv("A54_ROSTER_FILE")
+A55_ROSTER = os.getenv("A55_ROSTER_FILE")
+FULL_ROSTER = "full_roster.csv"
+
+def getRoster(rosterFile):
+    roster = []
+    rosterFileObj = open(rosterFile, 'r')
+    line = rosterFileObj.readline()
+    while(line):
+        pieces = line.split(',')
+        name = f'{pieces[1].strip()} {pieces[0].strip()}'
+        roster.append(name)
+        line = rosterFileObj.readline()
+    rosterFileObj.close()
+
+    return roster
+
+def getNameToHashMapping():
+    nameToHashMapping = {}
+    for filename in os.listdir(COMMIT_HASHS_DIR):
+        commitFileObj = open(f'{COMMIT_HASHS_DIR}/{filename}', 'r')
+        lines = commitFileObj.readlines()
+        name = lines[0].strip().split("Name:")[1].strip().split('(')[0].strip()
+
+    class HashParser(HTMLParser):
+        def __init__(self):
+            self._hash = ""
+            HTMLParser.__init__(self)
+
+        def handle_data(self, data):
+            if(data.strip()):
+                self._hash = data.strip()
+
+        def get_hash(self):
+            return self._hash
+
+    parser = HashParser()
+    parser.feed(lines[HASH_IDX])
+
+    hash = parser.get_hash()
+
+    if(hash == NO_ENTRY_MESSAGE):
+        hash = lines[COMMENT_IDX].strip()
+
+    nameToHashMapping[name] = hash
+    commitFileObj.close()
+
+    return nameToHashMapping
+
+def getStudentInfo():
+    nameToInfoMapping = {}
+    with open(STUDENT_INFO_FILE, 'r') as csvFile:
+        csvReader = csv.reader(csvFile)
+        for row in (csvReader):
+            studentName = row[0]
+            studentId = row[1]
+            githubUsername = row[2]
+
+            nameToInfoMapping[studentName] = [studentId, githubUsername]
+
+    return nameToInfoMapping
+
+def getRepositoryName(assignmentName, githubUsername):
+    return f'sem202020-{assignmentName}-{githubUsername}'
+
+def getRepositoryUrl(assignmentName, githubUsername):
+    repoName = getRepositoryName(assignmentName, githubUsername)
+
+    #return f'http://github.com/Binghamton-CS140-A0-Spring-2019/{repoName}.git'
+    return f'http://github.com/Binghamton-University-CS140-A0/{repoName}.git'
+
+#make a directory names after the assignment
+#for each student, go through clone their repositories
+def main():
+    studentsWoGithubs = []
+    studentsWoCommitHash = []
+
+    nameToInfoMapping = getStudentInfo()
+    nameToHashMapping = getNameToHashMapping()
+
+    parser = ArgumentParser()
+    parser.add_argument("assn_name", type=str, nargs=1)
+    parser.add_argument("-a51", action="store_true")
+    parser.add_argument("-a52", action="store_true")
+    parser.add_argument("-a53", action="store_true")
+    parser.add_argument("-a54", action="store_true")
+    parser.add_argument("-a55", action="store_true")
+    parser.add_argument("-full", action="store_true")
+
+    studentsOfInterest = []
+    args = parser.parse_args()
+
+    assnName = args.assn_name[0]
+
+    if(args.a51):
+        studentsOfInterest += getRoster(A51_ROSTER)
+    if(args.a52):
+        studentsOfInterest += getRoster(A52_ROSTER)
+    if(args.a53):
+        studentsOfInterest += getRoster(A53_ROSTER)
+    if(args.a54):
+        studentsOfInterest += getRoster(A54_ROSTER)
+    if(args.a55):
+        studentsOfInterest += getRoster(A55_ROSTER)
+    if(args.full):
+        studentsOfInterest += getRoster(FULL_ROSTER)
+
+    os.system(f'mkdir {assnName}')
+    numReposCloned = 0
+    error = []
+
+    for studentName in studentsOfInterest:
+        bID = ""
+        gitusername = ""
+        try:
+            bID = nameToInfoMapping[studentName][0]
+            gitusername = nameToInfoMapping[studentName][1]
+        except:
+            continue
+
+        if(nameToInfoMapping[studentName][1] != "NA"):
+            os.system("echo -------------" + studentName + "---------------------")
+            repositoryName = getRepositoryName(assnName, gitusername.strip())
+            repositoryUrl = getRepositoryUrl(assnName, gitusername.strip())
+            x = os.system(f'git clone {repositoryUrl}')
+            if x != 0:
+        	    error.append(f'{studentName} {bID}')
+        	    continue
+
+            p = subprocess.Popen(["mkdir", bID])
+            p.wait()
+            p = subprocess.Popen(["mv", repositoryName, bID])
+            p.wait()
+            p = subprocess.Popen(["mv", bID, assnName])
+            p.wait()
+
+            ##now we want to ensure we get the commit that the student wants graded
+            #p = subprocess.Popen(["git", "checkout",\
+                         #    name_to_hash_mapping[student_name]],\
+                         #    cwd = sys.argv[1] + os.sep + bID +\
+                          #       os.sep + sys.argv[1] + "-" +\
+                         #        gitusername.replace("\n", ""),\
+                        #     shell=True)
+
+            numReposCloned += 1
+            p.wait()
+        else:
+            studentsWoGithubs.append(studentName)
+
+    print(f'Successfully cloned repos from {numReposCloned} students out of a possible {len(studentsOfInterest)}.')
+    print(f'{len(error)} users had errors occur.')
+    print(error)
+    errors = open(assnName + "_errors.txt", 'w')
+    for name in error:
+        errors.write(name + "\n")
+    errors.close()
+    print(f'{len(studentsWoCommitHash)} have no commit hash on file.')
+    print(studentsWoCommitHash)
+    hash = open(assnName + "_noHash.txt", 'w')
+    for name in studentsWoCommitHash:
+        hash.write(name + "\n")
+    hash.close()
+
+main()

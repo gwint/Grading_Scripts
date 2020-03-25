@@ -1,0 +1,105 @@
+#!/usr/bin/python3
+
+import os
+import csv
+from argparse import ArgumentParser
+from dotenv import load_dotenv
+
+STUDENT_INFO_FILE = "studentGithubUsernamesCopy.csv"
+
+def getStudentInformation():
+    studentInformation = {}
+    with open(STUDENT_INFO_FILE, 'r') as csvFile:
+        csvReader = csv.reader(csvFile)
+        for row in (csvReader):
+            studentId = row[0]
+            fullName = row[1]
+            githubUsername = row[2]
+            studentInformation[studentId] = {"fullname" : fullName, \
+                                             "githubusername" : githubUsername}
+
+    return studentInformation
+
+def createClassPath(additionalPaths = []):
+    classPath = os.getenv("CLASSPATH")
+
+    if additionalPaths:
+        for additionalPath in additionalPaths:
+            classPath += f':{additionalPath}'
+
+    return classPath
+
+def compileAndRunTester(submissionsFolderName, testerPath, classPath):
+    pathToSubmissions = \
+           f'/home/gregory/Grading_Scripts/{submissionsFolderName}/'
+
+    studentFolderNames = [name for name in os.listdir(pathToSubmissions)]
+    studentFolderNames.sort()
+
+    print(f'Grading {len(studentFolderNames)} Assignments...')
+
+    junitJarPath = os.getenv("JUNIT_JAR_PATH")
+
+    for studentFolderName in studentFolderNames:
+        if(studentFolderName != 'report.txt'):
+            githubUsername = \
+                    studentInformation[studentFolderName]["githubusername"]
+            studentFullName = studentInformation[studentFolderName]["fullname"]
+
+            reportFileObj = open(f'{pathToSubmissions}report.txt', 'a')
+
+            print(f'Now grading work in {studentFolderName}...')
+            reportFileObj.write(f'\n\n{studentFullName}\n')
+            pathToCode = \
+                f'{pathToSubmissions}{studentFolderName}/sem202020-{submissionsFolderName}-{githubUsername}/'
+            print(f'Looking in {pathToCode} for code to grade...')
+
+            os.system(f'cd {pathToCode}')
+
+            copyTesterInCmdRes = os.system(f'cp {testerFilePath} {pathToCode}')
+            if copyTesterInCmdRes != 0:
+                print("ERROR: Unable to copy tester from {testerFilePath} to location containing student code ({pathToCode})")
+                sys.exit(1)
+
+            compilationCmd = f'javac -d . {pathToCode}*.java'
+            compilationCmdRes = os.system(compilationCmd)
+
+            if compilationCmdRes != 0:
+                reportFileObj.write("CODE FAILED TO COMPILE\n")
+                continue
+
+            #Run tester. The tester appends the grade and errors to report.txt
+            #We don't need to point to students folder to run, as .class files
+            #are saved directly to Grading_Scripts/
+            runCmd = f'java -jar {junitJarPath} --class-path {classPath} --scan-class-path > temp.txt'
+            print(runCmd)
+            runCmdRes = os.system(runCmd)
+
+            tempFileObj = open('temp.txt', 'r')
+            results = tempFileObj.read()
+            reportFileObj.write(f'{results}\n')
+
+            removeTempFileCmdRes = os.system("rm temp.txt")
+            if removeTempFileCmdRes != 0:
+                print("Failed to remove temp.txt")
+
+            os.system("cd ../..")
+
+if __name__ == "__main__":
+    load_dotenv()
+
+    parser = ArgumentParser()
+    parser.add_argument("assignmentName")
+    parser.add_argument("testerPath")
+    parser.add_argument("-c", "--classpath", nargs='+')
+
+    args = parser.parse_args()
+
+    classPath = createClassPath(args.classpath)
+
+    submissionsFolderName = args.assignmentName
+    testerFilePath = args.testerPath
+
+    studentInformation = getStudentInformation()
+
+    compileAndRunTester(submissionsFolderName, testerFilePath, classPath)

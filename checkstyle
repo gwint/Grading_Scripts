@@ -1,0 +1,71 @@
+#!/usr/bin/python3
+
+import sys
+
+def containsAlnum(aStr):
+    for char in aStr:
+        if char.isalnum():
+            return True
+
+    return False
+
+nameOfFileToCheck = sys.argv[1]
+styleCommentOutputFile = sys.argv[2]
+
+if len(sys.argv) != 3:
+    print("Error (Incorrect usage): ./styleChecker.py <file to check> <output filename>")
+    sys.exit(1)
+
+outputFileObj = open(styleCommentOutputFile, 'w')
+fileObj = open(nameOfFileToCheck, 'r')
+
+perIndentationLevelAmount = {}
+
+indentLevel = 0
+lineNumber = 1
+line = fileObj.readline()
+while line:
+    indentationAmount = 0
+    lineWONewline = line.rstrip()
+    i = 0
+    while i < len(lineWONewline) and lineWONewline[i].isspace():
+        indentationAmount += 1 if lineWONewline[i] == ' ' else 4
+        i += 1
+
+    print(f'indentation amount on line {lineNumber} = {indentationAmount}')
+
+    ## Does something need to go on a seperate line?
+    containsNumOrLetter = containsAlnum(lineWONewline)
+    if '}' in lineWONewline and containsNumOrLetter:
+        outputFileObj.write(f'Line {lineNumber}: }} should appear on newline\n')
+    if '{' in lineWONewline and containsNumOrLetter:
+        outputFileObj.write(f'Line {lineNumber}: {{ should appear on newline\n')
+
+    ## How does the amount of indetation compare with previous indentation
+    ## amounts?
+    if lineWONewline.strip() == "}":
+        indentLevel -= 1
+
+        if indentLevel not in perIndentationLevelAmount:
+            perIndentationLevelAmount[indentLevel] = set()
+        perIndentationLevelAmount[indentLevel].add(indentationAmount)
+
+    else:
+        if indentLevel not in perIndentationLevelAmount:
+            perIndentationLevelAmount[indentLevel] = set()
+        perIndentationLevelAmount[indentLevel].add(indentationAmount)
+
+        if '{' in lineWONewline:
+            indentLevel += 1
+        elif '}' in lineWONewline:
+            indentLevel -= 1
+
+
+    lineNumber += 1
+    line = fileObj.readline()
+
+print(perIndentationLevelAmount)
+
+outputFileObj.close()
+fileObj.close()
+
