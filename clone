@@ -64,7 +64,6 @@ def getNameToHashMapping():
         hash = parser.get_hash()
 
         if(hash != NO_ENTRY_MESSAGE):
-            #hash = lines[COMMENT_IDX].strip()
             nameToHashMapping[name] = hash
 
         commitFileObj.close()
@@ -160,14 +159,13 @@ def main():
             p = subprocess.Popen(["mv", bID, assnName])
             p.wait()
 
-            ##now we want to ensure we get the commit that the student wants graded
             if studentName in nameToHashMapping:
                 hash = nameToHashMapping[studentName]
                 directoryInWhichToRunCommand = f'{assnName}/{bID}/{repositoryName}'
                 print(directoryInWhichToRunCommand)
                 p = subprocess.Popen(["git", "checkout", hash], \
-                                 cwd = directoryInWhichToRunCommand, \
-                                 shell=False)
+                                     cwd = directoryInWhichToRunCommand, \
+                                     shell=False)
                 p.wait()
 
             else:

@@ -72,6 +72,9 @@ def compileAndRunTester(submissionsFolderName, testerPath, classPath):
             #We don't need to point to students folder to run, as .class files
             #are saved directly to Grading_Scripts/
             runCmd = f'java -jar {junitJarPath} --class-path {classPath} --scan-class-path > temp.txt'
+            #os.system(f'cd ../../..')
+            #testerObjectFileName = testerFilePath.split('/')[-1].replace(".java", "")
+            #runCmd = f'java -jar {junitJarPath} -cp .:{classPath} --include-classname \'.*\' --select-file exam01.{testerObjectFileName} > temp.txt'
             print(runCmd)
             runCmdRes = os.system(runCmd)
 
