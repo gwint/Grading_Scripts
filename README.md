@@ -42,3 +42,6 @@ the commit hash submitted to MyCourses by the student.
 2) If you have cloned multiple sets of assignments (e.g lab01 and lab02) and then try to execute the runtester
 script to grade lab02 after running it to grade lab01, the testers for lab01 will be rerun and will appear in the
 generated report.  This is a consequence of using --scan-class-path and the reason for comment (1).
+
+## TODO's
+1) Incorporate stylechecker into runtester to generate a separate code style report.
