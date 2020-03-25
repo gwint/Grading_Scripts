@@ -40,12 +40,6 @@ def getRoster(rosterFile):
     return roster
 
 def getNameToHashMapping():
-    nameToHashMapping = {}
-    for filename in os.listdir(COMMIT_HASHS_DIR):
-        commitFileObj = open(f'{COMMIT_HASHS_DIR}/{filename}', 'r')
-        lines = commitFileObj.readlines()
-        name = lines[0].strip().split("Name:")[1].strip().split('(')[0].strip()
-
     class HashParser(HTMLParser):
         def __init__(self):
             self._hash = ""
@@ -58,16 +52,22 @@ def getNameToHashMapping():
         def get_hash(self):
             return self._hash
 
-    parser = HashParser()
-    parser.feed(lines[HASH_IDX])
+    nameToHashMapping = {}
+    for filename in os.listdir(COMMIT_HASHS_DIR):
+        commitFileObj = open(f'{COMMIT_HASHS_DIR}/{filename}', 'r')
+        lines = commitFileObj.readlines()
+        name = lines[0].replace("Name: ", "").split('(')[0].strip()
 
-    hash = parser.get_hash()
+        parser = HashParser()
+        parser.feed(lines[HASH_IDX])
 
-    if(hash == NO_ENTRY_MESSAGE):
-        hash = lines[COMMENT_IDX].strip()
+        hash = parser.get_hash()
 
-    nameToHashMapping[name] = hash
-    commitFileObj.close()
+        if(hash != NO_ENTRY_MESSAGE):
+            #hash = lines[COMMENT_IDX].strip()
+            nameToHashMapping[name] = hash
+
+        commitFileObj.close()
 
     return nameToHashMapping
 
@@ -90,11 +90,8 @@ def getRepositoryName(assignmentName, githubUsername):
 def getRepositoryUrl(assignmentName, githubUsername):
     repoName = getRepositoryName(assignmentName, githubUsername)
 
-    #return f'http://github.com/{organizationName}/{repoName}.git'
     return f'http://github.com/{organizationName}/{repoName}.git'
 
-#make a directory names after the assignment
-#for each student, go through clone their repositories
 def main():
     studentsWoGithubs = []
     studentsWoCommitHash = []
@@ -164,15 +161,20 @@ def main():
             p.wait()
 
             ##now we want to ensure we get the commit that the student wants graded
-            #p = subprocess.Popen(["git", "checkout",\
-                         #    name_to_hash_mapping[student_name]],\
-                         #    cwd = sys.argv[1] + os.sep + bID +\
-                          #       os.sep + sys.argv[1] + "-" +\
-                         #        gitusername.replace("\n", ""),\
-                        #     shell=True)
+            if studentName in nameToHashMapping:
+                hash = nameToHashMapping[studentName]
+                directoryInWhichToRunCommand = f'{assnName}/{bID}/{repositoryName}'
+                print(directoryInWhichToRunCommand)
+                p = subprocess.Popen(["git", "checkout", hash], \
+                                 cwd = directoryInWhichToRunCommand, \
+                                 shell=False)
+                p.wait()
+
+            else:
+                studentsWoCommitHash.append(studentName)
 
             numReposCloned += 1
-            p.wait()
+
         else:
             studentsWoGithubs.append(studentName)
 
@@ -181,7 +183,7 @@ def main():
     print(f'{len(error)} users had errors occur.')
     print(error)
 
-    print(f'{len(studentsWoCommitHash)} have no commit hash on file.')
+    print(f'{len(studentsWoCommitHash)} have no commit hash on file so the most recent commit is used.')
     print(studentsWoCommitHash)
 
 main()
