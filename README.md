@@ -26,8 +26,7 @@ For students whose code didn't compile, we need to manually compile their code
 ## Running a junit tester via the command line
 
 1) Download [junit 5 jar](http://www.java2s.com/example/jar/j/download-junit412jar-file.html) and [hamcrest-core-1.3.jar](https://search.maven.org/search?q=g:org.hamcrest).
-2) Download [hamcrest jar](https://repo1.maven.org/maven2/org/hamcrest/hamcrest-core/1.3/)
 3) Create your junit tester
-4) Add both jar files to your CLASSPATH
-5) Compile code: javac -d . *.java
+4) Add the junit jar file to your CLASSPATH
+5) Compile code with the following command: javac -d . *.java
 6) Run the tests using the following command: 

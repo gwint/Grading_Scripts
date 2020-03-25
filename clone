@@ -24,6 +24,8 @@ A54_ROSTER = os.getenv("A54_ROSTER_FILE")
 A55_ROSTER = os.getenv("A55_ROSTER_FILE")
 FULL_ROSTER = "full_roster.csv"
 
+organizationName = "Binghamton-CS140-A0-Spring-2019"
+
 def getRoster(rosterFile):
     roster = []
     rosterFileObj = open(rosterFile, 'r')
@@ -88,8 +90,8 @@ def getRepositoryName(assignmentName, githubUsername):
 def getRepositoryUrl(assignmentName, githubUsername):
     repoName = getRepositoryName(assignmentName, githubUsername)
 
-    #return f'http://github.com/Binghamton-CS140-A0-Spring-2019/{repoName}.git'
-    return f'http://github.com/Binghamton-University-CS140-A0/{repoName}.git'
+    #return f'http://github.com/{organizationName}/{repoName}.git'
+    return f'http://github.com/{organizationName}/{repoName}.git'
 
 #make a directory names after the assignment
 #for each student, go through clone their repositories
@@ -108,6 +110,7 @@ def main():
     parser.add_argument("-a54", action="store_true")
     parser.add_argument("-a55", action="store_true")
     parser.add_argument("-full", action="store_true")
+    parser.add_argument("-organization_name", type=str, nargs=1)
 
     studentsOfInterest = []
     args = parser.parse_args()
@@ -127,6 +130,10 @@ def main():
     if(args.full):
         studentsOfInterest += getRoster(FULL_ROSTER)
 
+    if args.organization_name:
+        global organizationName
+        organizationName = args.organization_name[0]
+
     os.system(f'mkdir {assnName}')
     numReposCloned = 0
     error = []
@@ -141,7 +148,7 @@ def main():
             continue
 
         if(nameToInfoMapping[studentName][1] != "NA"):
-            os.system("echo -------------" + studentName + "---------------------")
+            os.system(f'echo {"-"*40} {studentName} {"-"*40}')
             repositoryName = getRepositoryName(assnName, gitusername.strip())
             repositoryUrl = getRepositoryUrl(assnName, gitusername.strip())
             x = os.system(f'git clone {repositoryUrl}')
@@ -170,17 +177,11 @@ def main():
             studentsWoGithubs.append(studentName)
 
     print(f'Successfully cloned repos from {numReposCloned} students out of a possible {len(studentsOfInterest)}.')
+
     print(f'{len(error)} users had errors occur.')
     print(error)
-    errors = open(assnName + "_errors.txt", 'w')
-    for name in error:
-        errors.write(name + "\n")
-    errors.close()
+
     print(f'{len(studentsWoCommitHash)} have no commit hash on file.')
     print(studentsWoCommitHash)
-    hash = open(assnName + "_noHash.txt", 'w')
-    for name in studentsWoCommitHash:
-        hash.write(name + "\n")
-    hash.close()
 
 main()
