@@ -30,8 +30,7 @@ def createClassPath(additionalPaths = []):
     return classPath
 
 def compileAndRunTester(submissionsFolderName, testerPath, classPath):
-    pathToSubmissions = \
-           f'/home/gregory/Grading_Scripts/{submissionsFolderName}/'
+    pathToSubmissions = f'{submissionsFolderName}/'
 
     studentFolderNames = [name for name in os.listdir(pathToSubmissions)]
     studentFolderNames.sort()
