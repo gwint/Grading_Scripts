@@ -2,6 +2,8 @@
 
 Dependencies: Python >= 3.6, [pydotenv](https://pypi.org/project/pydotenv/)
 
+Quick Note: This has been tested on linux ubuntu only.  Nothing in this repo will run on Windows.
+
 How to Clone:
 1) Head over to MyCourses and download the commit hashes for the assignment
    of interest.
