@@ -1,6 +1,6 @@
 ## clone - automated cloning of student repos
 
-Dependencies: Python >= 3.6, [pydotenv](https://pypi.org/project/pydotenv/)
+Dependencies: Python >= 3.6, [pydotenv](https://pypi.org/project/python-dotenv/)
 
 Quick Note: This has been tested on linux ubuntu only.  Nothing in this repo will run on Windows.
 
