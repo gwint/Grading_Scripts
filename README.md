@@ -9,7 +9,8 @@ How to Clone:
    of interest.
 2) Once it has been extracted, point the "COMMIT_HASHES_FOLDER_PATH" value
    from the .env file to this folder.
-3) Run the following command, using values that make sense for you: ./clone [-a51] [-a52] [-a53] [-a54] [-full] <\assignment name>
+3) Run the following command, using values that make sense for you: ./clone <assignmentName> [-a51] [-a52] [-a53] [-a54] [-full] [-organization_name=an-organization-name]
+(An example call would be ./clone exam01-a54 -a54 -organization_name Binghamton-University-CS140-A0)
 
 A directory named <\assignment name> will be created and all student
 repositories for assignment <\assignment name> will be cloned into it.
