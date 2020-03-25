@@ -32,6 +32,8 @@ run ./clone -h for more info.
 7) For students whose code does not compile, you will need to manually compile/run their code after handling any
    errors in their submission.
 
+(An example call would be ./runtester exam01-a54 /home/gregory/Downloads/A53_54junitTests.java)
+
 run ./runtester -h for more info.
 
 ## Running a single junit tester via the command line (not via runtester)
@@ -47,6 +49,8 @@ run ./runtester -h for more info.
 2) If you have cloned multiple sets of assignments (e.g lab01 and lab02) and then try to execute the runtester
 script to grade lab02 after running it to grade lab01, the testers for lab01 will be rerun and will appear in the
 generated report.  This is a consequence of using --scan-class-path and the reason for comment (1).
+3) One consequence of using --scan-class-path is that all junit test class names must end in "Tests" so that they
+ can be found by the ConsoleLauncher.
 
 ## TODO's
 1) Incorporate stylechecker into runtester to generate a separate code style report.
