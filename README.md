@@ -16,6 +16,8 @@ repositories for assignment <\assignment name> will be cloned into it.
 The particular commit checked out for each cloned repository will depend on
 the commit hash submitted to MyCourses by the student.
 
+run ./clone -h for more info.
+
 ## runtester - automated JUnit testing
 
 1) Download the [junit5 jar](https://mvnrepository.com/artifact/org.junit.platform/junit-platform-console-standalone/1.5.0).
@@ -28,6 +30,8 @@ the commit hash submitted to MyCourses by the student.
    <assignmentName>/report.txt.
 7) For students whose code does not compile, you will need to manually compile/run their code after handling any
    errors in their submission.
+
+run ./runtester -h for more info.
 
 ## Running a single junit tester via the command line (not via runtester)
 
