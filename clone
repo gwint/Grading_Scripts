@@ -84,7 +84,7 @@ def getStudentInfo():
     return nameToInfoMapping
 
 def getRepositoryName(assignmentName, githubUsername):
-    return f'sem202020-{assignmentName}-{githubUsername}'
+    return f'{assignmentName}-{githubUsername}'
 
 def getRepositoryUrl(assignmentName, githubUsername):
     repoName = getRepositoryName(assignmentName, githubUsername)
@@ -159,6 +159,7 @@ def main():
             p = subprocess.Popen(["mv", bID, assnName])
             p.wait()
 
+            '''
             if studentName in nameToHashMapping:
                 hash = nameToHashMapping[studentName]
                 directoryInWhichToRunCommand = f'{assnName}/{bID}/{repositoryName}'
@@ -170,6 +171,7 @@ def main():
 
             else:
                 studentsWoCommitHash.append(studentName)
+            '''
 
             numReposCloned += 1
 
