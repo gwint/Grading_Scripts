@@ -112,7 +112,6 @@ def main():
                                  cwd = directoryInWhichToRunCommand, \
                                  shell=False)
             response.wait()
-
         else:
             studentsWoCommitHash.append(bNumber)
 
