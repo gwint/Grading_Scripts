@@ -30,7 +30,7 @@ def createClassPath(additionalPaths = []):
     return classPath
 
 def compileAndRunTester(submissionsFolderName, testerPath, classPath):
-    pathToSubmissions = f'{submissionsFolderName}/'
+    pathToSubmissions = f'{submissionsFolderName}'
 
     studentFolderNames = [name for name in os.listdir(pathToSubmissions)]
     studentFolderNames.sort()
@@ -40,27 +40,27 @@ def compileAndRunTester(submissionsFolderName, testerPath, classPath):
     junitJarPath = os.getenv("JUNIT_JAR_PATH")
 
     for studentFolderName in studentFolderNames:
-        if(studentFolderName != 'report.txt'):
+        if studentFolderName != "report.txt":
             githubUsername = \
                     studentInformation[studentFolderName]["githubusername"]
             studentFullName = studentInformation[studentFolderName]["fullname"]
 
-            reportFileObj = open(f'{pathToSubmissions}report.txt', 'a')
+            reportFileObj = open(f'{pathToSubmissions}/report.txt', 'a')
 
             print(f'Now grading work in {studentFolderName}...')
             reportFileObj.write(f'\n\n{studentFullName}\n')
             pathToCode = \
-                f'{pathToSubmissions}{studentFolderName}/sem202020-{submissionsFolderName}-{githubUsername}/'
+                f'{pathToSubmissions}/{studentFolderName}/{submissionsFolderName}-{githubUsername}'
             print(f'Looking in {pathToCode} for code to grade...')
 
             os.system(f'cd {pathToCode}')
 
-            copyTesterInCmdRes = os.system(f'cp {testerFilePath} {pathToCode}')
+            copyTesterInCmdRes = os.system(f'cp {testerFilePath} {pathToCode}/')
             if copyTesterInCmdRes != 0:
                 print("ERROR: Unable to copy tester from {testerFilePath} to location containing student code ({pathToCode})")
                 sys.exit(1)
 
-            compilationCmd = f'javac -d . {pathToCode}*.java'
+            compilationCmd = f'javac -d . {pathToCode}/*.java'
             compilationCmdRes = os.system(compilationCmd)
 
             if compilationCmdRes != 0:

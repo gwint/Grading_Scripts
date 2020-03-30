@@ -85,9 +85,10 @@ def main():
 
         fullStudentName = bNumberToInfoMapping[bNumber]["fullname"]
 
-        os.system(f'echo {"-"*40} {fullStudentName} {"-"*40}')
         repositoryName = getRepositoryName(assnName, githubUsername.strip())
         repositoryUrl = getRepositoryUrl(organizationName, assnName, githubUsername.strip())
+
+        os.system(f'echo {"-"*40} {fullStudentName} {"-"*40}')
 
         cloneResponse = os.system(f'git clone {repositoryUrl}')
         if cloneResponse != 0:
