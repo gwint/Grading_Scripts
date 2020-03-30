@@ -1,92 +1,56 @@
 #!/usr/bin/python3
 
+import re
 import os
 import sys
 import subprocess
 import csv
 from argparse import ArgumentParser
-from html.parser import HTMLParser
 from dotenv import load_dotenv
 
 load_dotenv()
 
 COMMIT_HASHS_DIR = os.getenv("COMMIT_HASHES_FOLDER_PATH")
-STUDENT_INFO_FILE = "studentGithubUsernames.csv"
-NAME_IDX = 0
-HASH_IDX = 6
-COMMENT_IDX = 9
-NO_ENTRY_MESSAGE = \
-        "There is no student submission text data for this assignment."
-A51_ROSTER = os.getenv("A51_ROSTER_FILE")
-A52_ROSTER = os.getenv("A52_ROSTER_FILE")
-A53_ROSTER = os.getenv("A53_ROSTER_FILE")
-A54_ROSTER = os.getenv("A54_ROSTER_FILE")
-A55_ROSTER = os.getenv("A55_ROSTER_FILE")
-FULL_ROSTER = "full_roster.csv"
+STUDENT_INFO_FILE = "githubinfo.csv"
 
-organizationName = "Binghamton-CS140-A0-Spring-2019"
-
-def getRoster(rosterFile):
-    roster = []
-    rosterFileObj = open(rosterFile, 'r')
-    line = rosterFileObj.readline()
-    while(line):
-        pieces = line.split(',')
-        name = f'{pieces[1].strip()} {pieces[0].strip()}'
-        roster.append(name)
-        line = rosterFileObj.readline()
-    rosterFileObj.close()
-
-    return roster
-
-def getNameToHashMapping():
-    class HashParser(HTMLParser):
-        def __init__(self):
-            self._hash = ""
-            HTMLParser.__init__(self)
-
-        def handle_data(self, data):
-            if(data.strip()):
-                self._hash = data.strip()
-
-        def get_hash(self):
-            return self._hash
+def getBNumberToHashMapping():
+    bNumberRegex = re.compile(r'(b)([0-9]{8})')
+    commitHashRegex = re.compile(r'[a-z0-9]{40}')
 
     nameToHashMapping = {}
+
     for filename in os.listdir(COMMIT_HASHS_DIR):
-        commitFileObj = open(f'{COMMIT_HASHS_DIR}/{filename}', 'r')
-        lines = commitFileObj.readlines()
-        name = lines[0].replace("Name: ", "").split('(')[0].strip()
+        with open(f'{COMMIT_HASHS_DIR}/{filename}', 'r') as commitFileObj:
+            text = commitFileObj.read()
 
-        parser = HashParser()
-        parser.feed(lines[HASH_IDX])
+            bNumberMatches = bNumberRegex.search(text)
+            hashMatches = commitHashRegex.search(text)
 
-        hash = parser.get_hash()
-
-        if(hash != NO_ENTRY_MESSAGE):
-            nameToHashMapping[name] = hash
-
-        commitFileObj.close()
+            if hashMatches:
+               nameToHashMapping[bNumberMatches.group().lower()] = hashMatches.group()
 
     return nameToHashMapping
 
 def getStudentInfo():
-    nameToInfoMapping = {}
+    bNumberToInfoMapping = {}
     with open(STUDENT_INFO_FILE, 'r') as csvFile:
-        csvReader = csv.reader(csvFile)
-        for row in (csvReader):
-            studentName = row[0]
-            studentId = row[1]
-            githubUsername = row[2]
+        csvReader = csv.DictReader(csvFile)
+        for row in csvReader:
+            studentName = f'{row["firstname"]} {row["lastname"]}'
+            studentId = row["userid"]
+            githubUsername = row["githubusername"]
+            bnumber = row["bnumber"].lower()
 
-            nameToInfoMapping[studentName] = [studentId, githubUsername]
+            bNumberToInfoMapping[bnumber] = {"githubusername": githubUsername, \
+                                             "userid": studentId, \
+                                             "fullname": studentName}
 
-    return nameToInfoMapping
+    return bNumberToInfoMapping
 
 def getRepositoryName(assignmentName, githubUsername):
-    return f'sem202020-{assignmentName}-{githubUsername}'
+    return f'{assignmentName}-{githubUsername}'
 
-def getRepositoryUrl(assignmentName, githubUsername):
+def getRepositoryUrl(organizationName, assignmentName, githubUsername):
     repoName = getRepositoryName(assignmentName, githubUsername)
 
     return f'http://github.com/{organizationName}/{repoName}.git'
@@ -95,93 +59,67 @@ def main():
     studentsWoGithubs = []
     studentsWoCommitHash = []
 
-    nameToInfoMapping = getStudentInfo()
-    nameToHashMapping = getNameToHashMapping()
+    bNumberToInfoMapping = getStudentInfo()
+    bNumberToHashMapping = getBNumberToHashMapping()
 
     parser = ArgumentParser()
     parser.add_argument("assn_name", type=str, nargs=1)
-    parser.add_argument("-a51", action="store_true")
-    parser.add_argument("-a52", action="store_true")
-    parser.add_argument("-a53", action="store_true")
-    parser.add_argument("-a54", action="store_true")
-    parser.add_argument("-a55", action="store_true")
-    parser.add_argument("-full", action="store_true")
     parser.add_argument("-organization_name", type=str, nargs=1)
 
-    studentsOfInterest = []
     args = parser.parse_args()
-
     assnName = args.assn_name[0]
 
-    if(args.a51):
-        studentsOfInterest += getRoster(A51_ROSTER)
-    if(args.a52):
-        studentsOfInterest += getRoster(A52_ROSTER)
-    if(args.a53):
-        studentsOfInterest += getRoster(A53_ROSTER)
-    if(args.a54):
-        studentsOfInterest += getRoster(A54_ROSTER)
-    if(args.a55):
-        studentsOfInterest += getRoster(A55_ROSTER)
-    if(args.full):
-        studentsOfInterest += getRoster(FULL_ROSTER)
+    organizationName = "Binghamton-CS140-A0-Spring-2019"
 
     if args.organization_name:
-        global organizationName
         organizationName = args.organization_name[0]
 
     os.system(f'mkdir {assnName}')
     numReposCloned = 0
-    error = []
 
-    for studentName in studentsOfInterest:
-        bID = ""
-        gitusername = ""
-        try:
-            bID = nameToInfoMapping[studentName][0]
-            gitusername = nameToInfoMapping[studentName][1]
-        except:
+    for bNumber in bNumberToInfoMapping:
+        githubUsername = bNumberToInfoMapping[bNumber]["githubusername"]
+
+        if not githubUsername:
             continue
 
-        if(nameToInfoMapping[studentName][1] != "NA"):
-            os.system(f'echo {"-"*40} {studentName} {"-"*40}')
-            repositoryName = getRepositoryName(assnName, gitusername.strip())
-            repositoryUrl = getRepositoryUrl(assnName, gitusername.strip())
-            x = os.system(f'git clone {repositoryUrl}')
-            if x != 0:
-        	    error.append(f'{studentName} {bID}')
-        	    continue
+        fullStudentName = bNumberToInfoMapping[bNumber]["fullname"]
 
-            p = subprocess.Popen(["mkdir", bID])
-            p.wait()
-            p = subprocess.Popen(["mv", repositoryName, bID])
-            p.wait()
-            p = subprocess.Popen(["mv", bID, assnName])
-            p.wait()
+        os.system(f'echo {"-"*40} {fullStudentName} {"-"*40}')
+        repositoryName = getRepositoryName(assnName, githubUsername.strip())
+        repositoryUrl = getRepositoryUrl(organizationName, assnName, githubUsername.strip())
 
-            if studentName in nameToHashMapping:
-                hash = nameToHashMapping[studentName]
-                directoryInWhichToRunCommand = f'{assnName}/{bID}/{repositoryName}'
-                print(directoryInWhichToRunCommand)
-                p = subprocess.Popen(["git", "checkout", hash], \
-                                     cwd = directoryInWhichToRunCommand, \
-                                     shell=False)
-                p.wait()
+        cloneResponse = os.system(f'git clone {repositoryUrl}')
+        if cloneResponse != 0:
+    	    continue
 
-            else:
-                studentsWoCommitHash.append(studentName)
+        binghamtonUserID = bNumberToInfoMapping[bNumber]["userid"]
 
-            numReposCloned += 1
+        response = subprocess.Popen(["mkdir", binghamtonUserID])
+        response.wait()
+        response = subprocess.Popen(["mv", repositoryName, binghamtonUserID])
+        response.wait()
+        response = subprocess.Popen(["mv", binghamtonUserID, assnName])
+        response.wait()
+
+        if bNumber in bNumberToHashMapping:
+            hash = bNumberToHashMapping[bNumber]
+            directoryInWhichToRunCommand = f'{assnName}/{binghamtonUserID}/{repositoryName}'
+            print(directoryInWhichToRunCommand)
+
+            response = subprocess.Popen(["git", "checkout", hash], \
+                                 cwd = directoryInWhichToRunCommand, \
+                                 shell=False)
+            response.wait()
 
         else:
-            studentsWoGithubs.append(studentName)
+            studentsWoCommitHash.append(bNumber)
 
-    print(f'Successfully cloned repos from {numReposCloned} students out of a possible {len(studentsOfInterest)}.')
+        numReposCloned += 1
 
-    print(f'{len(error)} users had errors occur.')
-    print(error)
+    print(f'Successfully cloned repos from {numReposCloned} students.')
 
     print(f'{len(studentsWoCommitHash)} have no commit hash on file so the most recent commit is used.')
-    print(studentsWoCommitHash)
+    print([bNumberToInfoMapping[bNumber]["fullname"] for bNumber in studentsWoCommitHash])
 
 main()
