@@ -2,9 +2,9 @@ import os
 import csv
 
 #assignment_name = "Lab05"
-submissions_folder_name = "Assignment01"
-package_name = "assignment01"
-tester_file_path = "/home/mllab/Desktop/CS140/Grading_Scripts/Testers/Assignments/Assignment01Tester.java"
+submissions_folder_name = "Assignment07"
+package_name = "assignment07"
+tester_file_path = "/home/mllab/Desktop/CS140/Grading_Scripts/Testers/Assignments/Assignment07Tester.java"
 
 path_to_submissions = "/home/mllab/Desktop/CS140/Grading_Scripts/"+submissions_folder_name+"/"
 STUDENT_INFO_FILE = "studentGithubUsernames.csv"
@@ -43,17 +43,19 @@ id_to_github, id_to_name = get_student_info()
 #Run tester for each folder
 for student in student_folders:
 
-	if(student != 'report.txt'):
+	if(student != 'report.txt' and student != 'report54.txt'):
 
 		f = open(path_to_submissions+"report.txt",'a')
 
 		#Append student name to report.txt
 		print(student)
+		
 		f.write('\n\n' + id_to_name[student] + '\n')
 
 		#Get path to particular students code
-		path_to_code = path_to_submissions+student+'/'+package_name+'-'+id_to_github[student]+'/'
-		path_to_code = path_to_code + 'assignment01/' 
+		#Change Lab06 to prefix on students folder before github username
+		path_to_code = path_to_submissions+student+'/'+"assignment07"+'-'+id_to_github[student]+'/'
+		#path_to_code = path_to_code + 'assignment01/' 
 		#print(path_to_code)
 
 
@@ -64,7 +66,7 @@ for student in student_folders:
 			f.write("Failed to copy over tester, this message should never appear!!\n")
 
 		#Add temp file to student directory (to grade number of junits passed)
-		call11 = os.system('touch temp.txt')
+		"""call11 = os.system('touch temp.txt')
 		if(call11 != 0):
 			f.write("Failed to add temp.txt, this message should never appear!!\n")
 
@@ -89,19 +91,19 @@ for student in student_folders:
 			#are saved directly to Grading_Scripts/
 
 			#junit call
-			print("java -cp /usr/share/java/junit4.jar:. org.junit.runner.JUnitCore "+package_name+'.'+tester_file_name)
+			#print("java -cp /usr/share/java/junit4.jar:. org.junit.runner.JUnitCore "+package_name+'.'+tester_file_name)
 			call3 = os.system("java -cp /usr/share/java/junit4.jar:. org.junit.runner.JUnitCore "+package_name+'.'+tester_file_name)
 
 			#non junit call
 			#call3 = os.system("java "+package_name+'.'+tester_file_name)
 
 			#Call3 is always 256 running junits?
-			"""
+			
 			if(call3 != 0):
 				f = open(path_to_submissions+"report.txt",'a')
 				f.write("RUNTIME ERROR!! Check manually unless the tester catches this\n")
 				f.close()
-			"""
+			
 
 
 			#For junit, add number PASSED tokens in temp file with FAILED tokens for grade
@@ -131,4 +133,5 @@ for student in student_folders:
 				f = open(path_to_submissions+"report.txt",'a')
 				f.write("Failed to remove .class files. This should never appear.\n")
 				f.close()
+		"""
 

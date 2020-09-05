@@ -1,4 +1,0 @@
-tester output - 9 pts (percentage of tests passed * 9)
-Customer toString() uses StringBuilder - 0.25 pts
-Bank report() method present - 0.5 pts
-BankAccount toString() uses format() - 0.25 pts

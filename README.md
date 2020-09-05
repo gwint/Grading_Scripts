@@ -33,6 +33,7 @@ the commit hash submitted to MyCourses by the student.
 	- submissions_folder_name must be XXXX
 	- package_name must be name of package that students wrote code in
 	- tester_file_path must be path where tester is located
+	- Change prefix in for loop to prefix of foldername before github username
 
 	Note that runTester.py will add the tester file to each students code directory,
 	compile and run JUnit. You might need to modify the compile and run commands if you

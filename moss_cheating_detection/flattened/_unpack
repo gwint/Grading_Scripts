@@ -1,0 +1,109 @@
+#!/usr/bin/env bash
+
+# USAGE: unpack gradebook.zip
+
+# This program unpacks contents of gradebook.zip into directory which holds each
+# student's submissions as a directory.
+# WARNING: This program will delete the text files blackboard puts in the zip
+# file and also deletes the students' compressed file once unpacked.  It also
+# removes the overall blackboard zip file.
+# output is also logged to two output files: errors.txt and no_source.txt
+
+students=~/cs140/grading/students.txt
+
+FILE_RE='_([^_]+)_'
+GRADEBOOK_RE="gradebook_[a-zA-Z\.0-9]+${FILE_RE}"
+NAME_RE='_(b[0-9]+)_'
+
+if [ $# -ne 1 ]
+then
+    echo "USAGE: $0 gradebook.zip"
+    exit 1
+fi
+
+if [[ -z `which zip` ]]
+then
+    echo 'ERROR: you need zip and unzip'
+    exit 1
+fi
+
+if [[ -z `which tar` ]]
+then
+    echo 'WARNING: you likely need tar, unpacking will likely fail'
+    exit 1
+fi
+
+if [[ -z `which rar` ]]
+then
+    echo 'WARNING: you may need rar, unpacking may fail'
+    exit 1
+fi
+
+if [[ -z `which 7za` ]]
+then
+    echo 'WARNING: you may need 7za, unpacking may fail'
+    exit 1
+fi
+
+if [[ "$1" =~ $GRADEBOOK_RE ]]
+then
+    assignment=`sed s/20// <<< "${BASH_REMATCH[1]}" | tr [A-Z] [a-z]`
+else
+    echo 'ERROR: unable to determine assignment you wish to unpack.'
+    echo "Expected a filename of the form $GRADEBOOK_RE"
+    exit 1
+fi
+
+unzip -qq "$1" && rm -f "$1"
+mkdir "$assignment"
+mv "${assignment}_"* "$assignment" 2>&1> /dev/null
+cd "$assignment"
+
+rm -f *.txt # remove noisy text files we dont need
+
+for file in *
+do
+    if [[ "$file" =~ $NAME_RE ]]
+    then
+        bnum="${BASH_REMATCH[1]}"
+        name=$(grep $bnum $students | awk '{print $2}')
+        if [ -z "$name" ]
+        then
+            echo "ERROR: $bnum has no corresponding userid, skipping"
+            echo "$bnum" >> errors.txt
+            continue;
+        fi
+
+        mkdir "$name"
+
+        case "$file" in
+            *.tar* | *.tgz )
+                tar -axf "$file" -C "$name" --exclude-backups \
+                    --exclude='*.class' --exclude='*~' && rm -f "$file"
+                ;;
+            *.zip )
+                unzip -qq "$file" -d "$name" -x *.class *~ 2>/dev/null && rm -f "$file"
+                ;;
+            *.7z )
+                7za e "$file" -o"$name" && rm -f "$file"
+                ;;
+            *.rar )
+                rar x -idq "$file" "$name" -x*.class -x*~ && rm -f "$file"
+                ;;
+            * )
+                echo "WARNING: $name has unknown file extension $file"
+                echo "$name" >> errors.txt
+                continue
+                ;;
+        esac
+
+        if [ -z "`find $name -iname '*.java'`" ]
+        then
+            echo "WARNING: $name has no source files"
+            echo "$name" >> no_source.txt
+        fi
+    else
+        echo "WARNING: $file does not match expected pattern"
+        echo "Expected a filename of the form $FILE_RE"
+    fi
+done

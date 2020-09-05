@@ -1,5 +1,0 @@
-filled out / submit google form 2 pts
-complete the code involving the loan and loanee class 2 points
-pass tester provided in LoanSimulation 2 pts
-successfully push all code to github for grading 2 pts
-submitted comitt has to mycourses for grading purposes 2 pts
